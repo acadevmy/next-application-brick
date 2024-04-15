@@ -6,14 +6,7 @@ void run(HookContext context) async {
   await runPnpm(
     context: context
   );
-
 }
-
-String getWorkingDirectory(
-    {required HookContext context, required String applicationName}) {
-  return Directory.current.uri.resolve(applicationName).path;
-}
-
 
 Future<void> runPnpm({
   required HookContext context,
