@@ -28,6 +28,11 @@ environment:
 vars:
   applicationName:
     type: string
-    description: Next application name
-    default: Dash
-    prompt: What is the application name?
+    description: The Application Name
+    default: frontend
+    prompt: What is the name of this Next.js application?
+  port:
+    type: number
+    description: Port to listen on.
+    prompt: Which port do you want to use for this application?
+    default: 5000
