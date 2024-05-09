@@ -1,8 +1,6 @@
-import styles from "./page.module.css";
-
 const Home = () => {
   return (
-    <main className={styles.main}>
+    <main className="flex flex-col justify-between items-center p-10 min-h-screen">
       <p>Homepage</p>
     </main>
   );
