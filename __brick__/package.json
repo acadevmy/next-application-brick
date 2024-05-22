@@ -2,10 +2,12 @@
   "name": "{{applicationName.paramCase()}}",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@9.1.1",
   "scripts": {
-    "start": "next dev --port {{port}}",
-    "build:production": "next build",
-    "start:production": "next start --port {{port}}",
+    "preinstall": "pnpm dlx only-allow pnpm",
+    "dev": "next dev --port {{port}}",
+    "start": "next start --port {{port}}",
+    "build": "next build",
     "lint": "next lint"
   },
   "dependencies": {
@@ -29,5 +31,12 @@
     "prettier": "3.2.5",
     "tailwindcss": "^3.4.3",
     "typescript": "^5"
+  },
+  "nx": {
+    "targets": {
+      "build": {
+        "inputs": ["default", "environment"]
+      }
+    }
   }
 }
