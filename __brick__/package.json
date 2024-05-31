@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "next dev --port {{port}}",
-    "build:production": "next build",
-    "start:production": "next start --port {{port}}",
-    "lint": "next lint"
+    "dev": "next dev --port {{port}}",
+    "start": "next start --port {{port}}",
+    "build": "next build",
+    "lint": "tsc && next lint",
+    "lint:fix": "tsc && next lint --fix"
   },
   "dependencies": {
     "@sentry/nextjs": "^7.114.0",
