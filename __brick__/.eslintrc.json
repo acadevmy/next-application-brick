@@ -11,6 +11,10 @@
     "simple-import-sort/exports": "error",
     "react-hooks/exhaustive-deps": "error",
     "react/destructuring-assignment": "error",
+    "react/jsx-curly-brace-presence": [
+      2,
+      "never"
+    ],
     "react/function-component-definition": [
       2,
       {
