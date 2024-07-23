@@ -44,3 +44,7 @@ export const isEmptyObject = (obj: object) => Object.keys(obj).length === 0;
 
 export const JSONStringifyFormatted = (obj: object) =>
   JSON.stringify(obj, null, 4);
+
+export const notEmpty = <TValue>(
+  value: TValue | null | undefined,
+): value is TValue => value !== null && value !== undefined;
