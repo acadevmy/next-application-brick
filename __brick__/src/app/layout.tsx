@@ -4,9 +4,10 @@ import type { Metadata } from "next";
 
 import { inter } from "@/fonts";
 import { getGlobalMetadata } from "@/utils/metadata";
+import { DEFAULT_EMPTY_STRING } from "@/utils/utilityConstants";
 
 export const generateMetadata = async (): Promise<Metadata | null> => {
-  return getGlobalMetadata("");
+  return getGlobalMetadata(DEFAULT_EMPTY_STRING);
 };
 
 const RootLayout = ({
