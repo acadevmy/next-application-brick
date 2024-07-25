@@ -4,9 +4,21 @@
     "plugin:prettier/recommended"
   ],
   "plugins": [
-    "simple-import-sort"
+    "simple-import-sort",
+    "eslint-plugin-unused-imports"
   ],
   "rules": {
+    "no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ],
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "react-hooks/exhaustive-deps": "error",

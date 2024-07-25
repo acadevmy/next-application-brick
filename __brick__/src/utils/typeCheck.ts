@@ -3,6 +3,10 @@ import { DEFAULT_EMPTY_STRING } from "@/utils/utilityConstants";
 export const isString = (value: unknown): value is string =>
   typeof value === "string";
 
+export const isNumber = <TValue extends number>(
+  value: unknown,
+): value is TValue => typeof value === "number";
+
 type NonEmptyString = string & { __nonEmptyString: never };
 
 export const isStringNotEmpty = (value: unknown): value is NonEmptyString =>
@@ -19,4 +23,10 @@ export const instanceOf = <T extends object>(
   key: keyof T,
 ): object is T => {
   return key in object;
+};
+
+export const notEmpty = <TValue>(
+  value: TValue | null | undefined,
+): value is TValue => {
+  return value !== null && value !== undefined;
 };
