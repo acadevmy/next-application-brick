@@ -2,7 +2,7 @@ import { Metadata } from "next";
 
 import { Seo } from "@/types";
 
-export const getMetadata = (seoObj: Seo): Metadata | null => {
+export const getMetadata = (seoObj?: Seo): Metadata | null => {
   if (!seoObj) return null;
 
   const { ogImage, title, description, canonicalUrl, noIndex, noFollow } =
