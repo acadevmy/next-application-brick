@@ -1,21 +1,25 @@
-import { env } from "@dotenv-run/core";
 import { withSentryConfig } from "@sentry/nextjs";
-
-const { raw } = env({
-  root: "../..",
-  verbose: true,
-  prefix: "(^{{applicationName.constantCase()}}_|^NEXT_PUBLIC_{{applicationName.constantCase()}}_)",
-  nodeEnv: false,
-});
+import { DotenvRunPlugin } from "@dotenv-run/webpack";
 
 const isProd = process.env.NODE_ENV === "production";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  env: raw,
   distDir: isProd ? "dist" : ".next",
   sentry: {
     hideSourceMaps: true,
+  },
+  webpack: (config) => {
+    config.plugins = config.plugins || [];
+    const regex = /^(?!NODE_ENV$)(?!NEXT_DEPLOYMENT_ID$)(?!NEXT_PRIVATE_WORKER$)(?!NEXT_RUNTIME$)(?!__NEXT_PRIVATE_ORIGIN$)({{applicationName.constantCase()}}_.*)(NEXT_PUBLIC_{{applicationName.constantCase()}}_.*)$/;
+    config.plugins.push(
+        new DotenvRunPlugin(
+            { prefix: regex, root: "../..", verbose: false, },
+            true,
+        ),
+    );
+
+    return config
   },
 };
 
