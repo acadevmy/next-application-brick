@@ -8,9 +8,12 @@ const { raw } = env({
   nodeEnv: false,
 });
 
+const isProd = process.env.NODE_ENV === "production";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: raw,
+  distDir: isProd ? "dist" : ".next",
   sentry: {
     hideSourceMaps: true,
   },
