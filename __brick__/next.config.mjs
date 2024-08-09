@@ -4,7 +4,7 @@ import { withSentryConfig } from "@sentry/nextjs";
 const { raw } = env({
   root: "../..",
   verbose: true,
-  prefix: "(^FRONTEND_|^NEXT_PUBLIC_FRONTEND_)",
+  prefix: "(^{{applicationName.constantCase()}}_|^NEXT_PUBLIC_{{applicationName.constantCase()}}_)",
   nodeEnv: false,
 });
 
@@ -20,9 +20,9 @@ const nextConfig = {
 };
 
 const sentryWebpackPluginOptions = {
-  org: process.env.FRONTEND_SENTRY_ORG,
-  project: process.env.FRONTEND_SENTRY_PROJECT,
-  authToken: process.env.FRONTEND_SENTRY_AUTH_TOKEN,
+  org: process.env.{{applicationName.constantCase()}}_SENTRY_ORG,
+  project: process.env.{{applicationName.constantCase()}}_SENTRY_PROJECT,
+  authToken: process.env.{{applicationName.constantCase()}}_SENTRY_AUTH_TOKEN,
   silent: true, // Suppresses all logs
 
   // For all available options, see:

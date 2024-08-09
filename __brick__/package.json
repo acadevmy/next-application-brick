@@ -33,5 +33,15 @@
     "sass": "^1.77.4",
     "tailwindcss": "^3.4.3",
     "typescript": "^5"
+  },
+  "nx": {
+    "targets": {
+      "build": {
+        "inputs": [
+          "default",
+          "environment"
+        ]
+      }
+    }
   }
 }
