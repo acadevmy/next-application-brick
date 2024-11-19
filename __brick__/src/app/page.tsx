@@ -1,6 +1,6 @@
 import { Metadata } from "next";
+import Image from "next/image";
 
-import Button from "@/components/Button";
 import { getMetadata } from "@/utils/metadata";
 import { DEFAULT_EMPTY_STRING } from "@/utils/utilityConstants";
 
@@ -20,10 +20,15 @@ export const generateMetadata = async (): Promise<Metadata | null> => {
 
 const Home = () => {
   return (
-    <main className="flex flex-col items-center p-10 min-h-screen">
-      <p>Homepage</p>
-
-      <Button>My Button</Button>
+    <main className="flex flex-col justify-center items-center min-h-screen">
+      <Image
+        src="https://devmy.it/assets/svg/logo_white.svg"
+        alt="Next.js logo"
+        width={180}
+        height={38}
+        priority
+      />
+      <p className="font-mono mt-4">nextjs-brick</p>
     </main>
   );
 };
