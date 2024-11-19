@@ -1,10 +1,11 @@
 import { withSentryConfig } from "@sentry/nextjs";
 import { DotenvRunPlugin } from "@dotenv-run/webpack";
+import { NextConfig } from "next";
 
 const isProd = process.env.NODE_ENV === "production";
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+
+const nextConfig: NextConfig = {
   distDir: isProd ? "dist" : ".next",
   sentry: {
     hideSourceMaps: true,
