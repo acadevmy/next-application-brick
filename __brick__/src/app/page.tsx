@@ -1,20 +1,16 @@
 import { Metadata } from "next";
 import Image from "next/image";
 
-import { getMetadata } from "@/utils/metadata";
-import { DEFAULT_EMPTY_STRING } from "@/utils/utilityConstants";
+import { generateCanonicalUrl, getMetadata } from "@/utils/metadata";
 
 export const generateMetadata = async (): Promise<Metadata | null> => {
+  const defaultCanonicalUrl = generateCanonicalUrl();
+
   return getMetadata({
-    canonicalUrl: DEFAULT_EMPTY_STRING,
-    description: DEFAULT_EMPTY_STRING,
-    noFollow: false,
-    noIndex: false,
-    ogImage: {
-      title: DEFAULT_EMPTY_STRING,
-      url: DEFAULT_EMPTY_STRING,
+    seoObj: {},
+    defaultSeoObj: {
+      canonicalUrl: defaultCanonicalUrl,
     },
-    title: DEFAULT_EMPTY_STRING,
   });
 };
 

@@ -3,10 +3,19 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { fetchTimeApiData } from "@/data";
-import { getMetadata } from "@/utils/metadata";
+import { generateCanonicalUrl, getMetadata } from "@/utils/metadata";
 
 export const generateMetadata = async (): Promise<Metadata | null> => {
-  return getMetadata();
+  const defaultCanonicalUrl = generateCanonicalUrl({
+    href: "/static-data",
+  });
+
+  return getMetadata({
+    seoObj: {},
+    defaultSeoObj: {
+      canonicalUrl: defaultCanonicalUrl,
+    },
+  });
 };
 
 const StaticDataPage = async () => {

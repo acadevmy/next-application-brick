@@ -7,7 +7,7 @@ import {
   DynamicTimeZonePageProps,
 } from "@/appTypes/PageProps";
 import { fetchAvailableTimezones, fetchTimeApiDataByTimeZone } from "@/data";
-import { getMetadata } from "@/utils/metadata";
+import { generateCanonicalUrl, getMetadata } from "@/utils/metadata";
 
 export const generateMetadata = async ({
   params,
@@ -16,7 +16,16 @@ export const generateMetadata = async ({
   const time_zone = paramsData.time_zone;
   if (time_zone) return null;
 
-  return getMetadata();
+  const defaultCanonicalUrl = generateCanonicalUrl({
+    params: { ...paramsData, type: "dynamic_time_zone" },
+  });
+
+  return getMetadata({
+    seoObj: {},
+    defaultSeoObj: {
+      canonicalUrl: defaultCanonicalUrl,
+    },
+  });
 };
 
 export const generateStaticParams = async () => {

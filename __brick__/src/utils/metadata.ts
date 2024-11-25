@@ -1,19 +1,62 @@
 import { Metadata } from "next";
 
-import { Seo } from "@/types";
+import { PagesParams } from "@/appTypes/PageProps";
+import { getHref } from "@/utils/navigation";
+import { instanceOf } from "@/utils/typeCheck";
+import { DEFAULT_EMPTY_STRING } from "@/utils/utilityConstants";
+import { createMetaDescription } from "@/utils/utilityFunction";
 
-export const getMetadata = (seoObj?: Seo): Metadata | null => {
-  if (!seoObj) return null;
+type GenerateCanonicalProps =
+  | {
+      params: PagesParams;
+      rewriteUrl?: string | null;
+    }
+  | {
+      href: string;
+    };
 
-  const { ogImage, title, description, canonicalUrl, noIndex, noFollow } =
-    seoObj;
+export type Seo = {
+  title?: string | null;
+  description?: string | null;
+  noIndex?: boolean | null;
+  noFollow?: boolean | null;
+  ogImage?: {
+    url: string;
+    title: string;
+  } | null;
+  canonicalUrl?: string | null;
+};
 
-  const cmsImage = ogImage
-    ? {
-        url: ogImage.url,
-        alt: ogImage.title,
-      }
-    : undefined;
+type DefaultSeo = Pick<
+  Seo,
+  "title" | "description" | "ogImage" | "canonicalUrl"
+>;
+
+interface GetMetaData {
+  seoObj?: Seo | null;
+  defaultSeoObj: DefaultSeo;
+}
+
+const serializeSeo = ({ seoObj, defaultSeoObj }: GetMetaData) => {
+  return {
+    ...seoObj,
+    title: seoObj?.title ?? defaultSeoObj.title,
+    description:
+      seoObj?.description ??
+      createMetaDescription(defaultSeoObj?.description ?? DEFAULT_EMPTY_STRING),
+    ogImage: seoObj?.ogImage ?? defaultSeoObj.ogImage,
+    canonicalUrl: seoObj?.canonicalUrl ?? defaultSeoObj.canonicalUrl,
+  };
+};
+
+export const getMetadata = ({
+  defaultSeoObj,
+  seoObj,
+}: GetMetaData): Metadata | null => {
+  const { ogImage, title, description, canonicalUrl } = serializeSeo({
+    seoObj,
+    defaultSeoObj,
+  });
 
   return {
     title,
@@ -27,25 +70,28 @@ export const getMetadata = (seoObj?: Seo): Metadata | null => {
     openGraph: {
       title: title ?? undefined,
       description: description ?? undefined,
-      images: cmsImage
+      images: ogImage
         ? {
-            url: cmsImage.url,
-            alt: cmsImage.alt,
+            url: ogImage.url,
+            alt: ogImage.url,
           }
         : undefined,
     },
     robots: {
-      index: !noIndex,
-      follow: !noFollow,
+      index: !seoObj?.noIndex,
+      follow: !seoObj?.noFollow,
       googleBot: {
-        index: !noIndex,
-        follow: !noFollow,
+        index: !seoObj?.noIndex,
+        follow: !seoObj?.noFollow,
       },
     },
   };
 };
 
-export const getGlobalMetadata = (title: string): Metadata => {
+export const getGlobalMetadata = (
+  title: string,
+  faviconUrl?: string | null,
+): Metadata => {
   return {
     title: {
       template: `%s | ${title}`,
@@ -54,5 +100,34 @@ export const getGlobalMetadata = (title: string): Metadata => {
     openGraph: {
       title: title,
     },
+    ...(faviconUrl
+      ? {
+          icons: {
+            icon: { url: faviconUrl },
+          },
+        }
+      : {}),
   };
+};
+
+export const generateCanonicalUrl = (props?: GenerateCanonicalProps) => {
+  const baseUrl = "http://localhost:4000";
+  if (!props) return `${baseUrl}/`;
+
+  if (instanceOf(props, "href")) {
+    return `${baseUrl}${props.href}`;
+  }
+
+  const { params, rewriteUrl } = props;
+
+  switch (params?.type) {
+    case "dynamic_time_zone":
+      return `${baseUrl}/${getHref({
+        slug: params.time_zone,
+        rewriteUrl,
+      })}`;
+
+    default:
+      return `${baseUrl}`;
+  }
 };
