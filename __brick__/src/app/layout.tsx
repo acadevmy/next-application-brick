@@ -1,6 +1,7 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
+import NextTopLoader from "nextjs-toploader";
 
 import { geistMono, inter } from "@/fonts";
 import ReactQueryProvider from "@/reactQuery/ReactQueryProvider";
@@ -19,6 +20,8 @@ const RootLayout = ({
   return (
     <html lang="en">
       <body className={`${inter.className} ${geistMono.variable} antialiased`}>
+        <NextTopLoader color="#000" showSpinner={false} />
+
         <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
     </html>
