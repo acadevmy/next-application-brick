@@ -3,6 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 
 import { geistMono, inter } from "@/fonts";
+import ReactQueryProvider from "@/reactQuery/ReactQueryProvider";
 import { getGlobalMetadata } from "@/utils/metadata";
 import { DEFAULT_EMPTY_STRING } from "@/utils/utilityConstants";
 
@@ -18,7 +19,7 @@ const RootLayout = ({
   return (
     <html lang="en">
       <body className={`${inter.className} ${geistMono.variable} antialiased`}>
-        {children}
+        <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
     </html>
   );
