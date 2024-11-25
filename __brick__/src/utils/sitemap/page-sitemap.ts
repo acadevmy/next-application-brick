@@ -4,7 +4,7 @@ const generatePageSitemap = async () => {
   const lastModified = new Date();
   const pagesSitemap: MetadataRoute.Sitemap = [
     {
-      url: `http://localhost:4000`,
+      url: process.env.{{applicationName.constantCase()}}_DOMAIN as string,
       lastModified,
       priority: 2,
       changeFrequency: "weekly",

@@ -7,7 +7,7 @@ const robots = (): MetadataRoute.Robots => {
       disallow: ["/*?*"],
       allow: ["/", "/_next/image/"],
     },
-    sitemap: `http://localhost:4000/sitemap-index.xml`,
+    sitemap: `${process.env.{{applicationName.constantCase()}}_DOMAIN}/sitemap-index.xml`,
   };
 };
 

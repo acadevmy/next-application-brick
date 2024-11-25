@@ -5,7 +5,7 @@ const generateProductSitemap = async () => {
 
   const productsSitemap: MetadataRoute.Sitemap = [
     {
-      url: `http://localhost:4000/product/1`,
+      url: `${process.env.{{applicationName.constantCase()}}_DOMAIN}/product/1`,
       lastModified,
       priority: 1,
       changeFrequency: "monthly",
