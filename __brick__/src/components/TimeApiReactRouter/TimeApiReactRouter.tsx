@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
+import { useMemo } from "react";
 
 import { TimeApiData } from "@/data/types";
 import { RouteHandlerResponseType } from "@/utils/helper/types";
@@ -19,11 +20,15 @@ const query = async (timeZone: string | null) => {
 
 const TimeApiReactRouter = () => {
   const searchParams = useSearchParams();
-  const timeZoneParam = searchParams.get("time_zone");
+  const timeZoneParam = useMemo(
+    () => searchParams.get("time_zone"),
+    [searchParams],
+  );
 
   const { data } = useQuery({
     queryKey: [`time-zone-${timeZoneParam}`],
     queryFn: () => query(timeZoneParam),
+    enabled: !!timeZoneParam,
   });
 
   return (
