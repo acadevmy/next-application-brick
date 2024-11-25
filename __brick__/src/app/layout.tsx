@@ -2,7 +2,7 @@ import "./globals.css";
 
 import type { Metadata } from "next";
 
-import { inter } from "@/fonts";
+import { geistMono, inter } from "@/fonts";
 import { getGlobalMetadata } from "@/utils/metadata";
 import { DEFAULT_EMPTY_STRING } from "@/utils/utilityConstants";
 
@@ -17,7 +17,9 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} ${geistMono.variable} antialiased`}>
+        {children}
+      </body>
     </html>
   );
 };
