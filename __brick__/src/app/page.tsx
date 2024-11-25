@@ -1,12 +1,16 @@
 import { Metadata } from "next";
 import Image from "next/image";
 
-import { generateCanonicalUrl, getMetadata } from "@/utils/metadata";
+import { generateCanonicalUrl, getSeoMetadata } from "@/utils/seoMetadata";
 
 export const generateMetadata = async (): Promise<Metadata | null> => {
-  const defaultCanonicalUrl = generateCanonicalUrl();
+  const defaultCanonicalUrl = generateCanonicalUrl({
+    type: "href",
+    href: "/",
+    baseUrl: process.env.{{applicationName.constantCase()}}_DOMAIN as string,
+  });
 
-  return getMetadata({
+  return getSeoMetadata({
     seoObj: {},
     defaultSeoObj: {
       canonicalUrl: defaultCanonicalUrl,
