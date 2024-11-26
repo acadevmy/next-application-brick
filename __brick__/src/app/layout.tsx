@@ -5,7 +5,7 @@ import NextTopLoader from "nextjs-toploader";
 
 import { geistMono, inter } from "@/fonts";
 import ReactQueryProvider from "@/reactQuery/ReactQueryProvider";
-import { getGlobalMetadata } from "@/utils/metadata";
+import { getGlobalMetadata } from "@/utils/seoMetadata";
 import { DEFAULT_EMPTY_STRING } from "@/utils/utilityConstants";
 
 export const generateMetadata = async (): Promise<Metadata | null> => {
