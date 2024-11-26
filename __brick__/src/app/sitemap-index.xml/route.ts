@@ -18,7 +18,9 @@ export async function GET() {
     <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       ${generateSitemaps()
         .map(({ id }) =>
-          generateSitemapLink(`${process.env.{{applicationName.constantCase()}}_DOMAIN}/${getXmlFileName(id)}`),
+          generateSitemapLink(`
+            ${process.env.{{applicationName.constantCase()}}_DOMAIN}/${getXmlFileName(id)}
+          `),
         )
         .join(DEFAULT_EMPTY_STRING)}
     </sitemapindex>`;
