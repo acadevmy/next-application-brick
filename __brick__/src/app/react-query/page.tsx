@@ -3,10 +3,21 @@ import Image from "next/image";
 import { Suspense } from "react";
 
 import TimeApiReactRouter from "@/components/TimeApiReactRouter/TimeApiReactRouter";
-import { getMetadata } from "@/utils/metadata";
+import { generateCanonicalUrl, getSeoMetadata } from "@/utils/seoMetadata";
 
 export const generateMetadata = async (): Promise<Metadata | null> => {
-  return getMetadata();
+  const defaultCanonicalUrl = generateCanonicalUrl({
+    type: "href",
+    href: "/react-query",
+    baseUrl: process.env.{{applicationName.constantCase()}}_DOMAIN as string,
+  });
+
+  return getSeoMetadata({
+    seoObj: {},
+    defaultSeoObj: {
+      canonicalUrl: defaultCanonicalUrl,
+    },
+  });
 };
 
 const ReactQueryPage = async () => {

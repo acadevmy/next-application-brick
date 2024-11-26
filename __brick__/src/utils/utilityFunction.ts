@@ -1,5 +1,11 @@
+import he from "he";
+
 import { isStringNotEmpty } from "@/utils/typeCheck";
-import { DEFAULT_CONCATENATE_SEPARATOR } from "@/utils/utilityConstants";
+import {
+  DEFAULT_CONCATENATE_SEPARATOR,
+  DEFAULT_EMPTY_STRING,
+  DEFAULT_META_DESCRIPTION_LENGTH,
+} from "@/utils/utilityConstants";
 
 export const first = <T>(arr: T[] | null | undefined): T | undefined => {
   if (arr && arr.length > 0) {
@@ -48,3 +54,20 @@ export const JSONStringifyFormatted = (obj: object) =>
 export const notEmpty = <TValue>(
   value: TValue | null | undefined,
 ): value is TValue => value !== null && value !== undefined;
+
+export const stripHtml = (inputString: string) =>
+  inputString.replace(/(<([^>]+)>)/gi, DEFAULT_EMPTY_STRING);
+
+export const getChars = ({
+  inputString,
+  charsLength,
+}: {
+  inputString: string;
+  charsLength: number;
+}) => inputString.substring(0, charsLength);
+
+export const createMetaDescription = (description: string) =>
+  getChars({
+    inputString: stripHtml(he.decode(description)),
+    charsLength: DEFAULT_META_DESCRIPTION_LENGTH,
+  });
