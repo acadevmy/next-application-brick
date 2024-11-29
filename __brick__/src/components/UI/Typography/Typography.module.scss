@@ -1,0 +1,63 @@
+.h1 {
+  @apply scroll-m-20 text-5xl font-bold;
+}
+
+.h2 {
+  @apply scroll-m-20 text-4xl font-bold;
+}
+
+.h3 {
+  @apply scroll-m-20 text-3xl font-bold;
+}
+
+.h4 {
+  @apply scroll-m-20 text-2xl font-bold;
+}
+
+.h5 {
+  @apply scroll-m-20 text-xl font-bold;
+}
+
+.largeText {
+  @apply text-xl font-medium;
+}
+
+.p {
+  @apply text-base whitespace-pre-line;
+}
+
+.blockquote {
+  @apply text-base font-medium;
+}
+
+.tableTitle {
+  @apply text-base font-medium;
+}
+
+.table {
+  @apply text-base font-medium;
+}
+
+.list {
+  @apply text-base font-medium;
+}
+
+.smallText {
+  @apply text-sm font-medium;
+}
+
+.xsmallText {
+  @apply text-xs font-medium;
+}
+
+.normal {
+  @apply font-normal;
+}
+
+.medium {
+  @apply font-medium;
+}
+
+.bold {
+  @apply font-bold;
+}
