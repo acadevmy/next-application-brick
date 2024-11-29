@@ -5,15 +5,13 @@ import { NextConfig } from "next";
 const { raw } = env({
   root: "../..",
   verbose: true,
-  prefix: "(^{{applicationName.constantCase()}}_|^NEXT_PUBLIC_{{applicationName.constantCase()}}_)",
+  prefix:
+    "(^{{applicationName.constantCase()}}_|^NEXT_PUBLIC_{{applicationName.constantCase()}}_)",
   nodeEnv: false,
 });
 
-const isProd = process.env.NODE_ENV === "production";
-
 const nextConfig: NextConfig = {
   env: raw,
-  distDir: isProd ? "dist" : ".next",
   sentry: {
     hideSourceMaps: true,
   },
