@@ -65,6 +65,7 @@ const config = {
       "5xl": ["3rem", { lineHeight: "3.5rem" }],
     },
     borderRadius: {
+      none: "0",
       lg: "var(--radius)",
       md: "calc(var(--radius) - 2px)",
       sm: "calc(var(--radius) - 4px)",
