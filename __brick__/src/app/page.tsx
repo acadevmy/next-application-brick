@@ -22,7 +22,7 @@ const Home = () => {
   return (
     <main className="flex flex-col justify-center items-center min-h-screen">
       <Image
-        src="https://devmy.it/assets/svg/logo_white.svg"
+        src="https://devmy.it/assets/svg/logo.svg"
         alt="Next.js logo"
         width={180}
         height={38}

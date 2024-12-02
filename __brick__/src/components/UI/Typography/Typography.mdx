@@ -1,0 +1,95 @@
+import { Meta, Typeset, Unstyled } from '@storybook/blocks';
+import Typography from './';
+
+<Meta title="Foundations / Typography" />
+
+export const sampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+
+# Typography
+
+**Font:** Satoshi
+
+**Weights:** 400(regular), 500(medium), 700(bold)
+
+<Unstyled>
+  <div className='flex flex-col gap-10'>
+    <div>
+      <div className='text-xs'>
+        h1
+      </div>
+      <Typography variant='h1'>{sampleText}</Typography>
+    </div>
+    <div>
+      <div className='text-xs'>
+        h2
+      </div>
+      <Typography variant='h2'>{sampleText}</Typography>
+    </div>
+    <div>
+      <div className='text-xs'>
+        h3
+      </div>
+      <Typography variant='h3'>{sampleText}</Typography>
+    </div>
+    <div>
+      <div className='text-xs'>
+        h4
+      </div>
+      <Typography variant='h4'>{sampleText}</Typography>
+    </div>
+    <div>
+      <div className='text-xs'>
+        h5
+      </div>
+      <Typography variant='h5'>{sampleText}</Typography>
+    </div>
+    <div>
+      <div className='text-xs'>
+        largeText
+      </div>
+      <Typography variant='largeText'>{sampleText}</Typography>
+    </div>
+    <div>
+      <div className='text-xs'>
+        p
+      </div>
+      <Typography variant='p'>{sampleText}</Typography>
+    </div>
+    <div>
+      <div className='text-xs'>
+        blockquote
+      </div>
+      <Typography variant='blockquote'>{sampleText}</Typography>
+    </div>
+    <div>
+      <div className='text-xs'>
+        tableTitle
+      </div>
+      <Typography variant='tableTitle'>{sampleText}</Typography>
+    </div>
+    <div>
+      <div className='text-xs'>
+        table
+      </div>
+      <Typography variant='table'>{sampleText}</Typography>
+    </div>
+    <div>
+      <div className='text-xs'>
+        list
+      </div>
+      <Typography variant='list'>{sampleText}</Typography>
+    </div>
+    <div>
+      <div className='text-xs'>
+        smallText
+      </div>
+      <Typography variant='smallText'>{sampleText}</Typography>
+    </div>
+    <div>
+      <div className='text-xs'>
+        xsmallText
+      </div>
+      <Typography variant='xsmallText'>{sampleText}</Typography>
+  </div></
+  div>
+</Unstyled>

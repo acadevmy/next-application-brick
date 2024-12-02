@@ -8,18 +8,6 @@ const meta: Meta<typeof Button> = {
   title: "Atoms/Button",
   component: Button,
   args: { onClick: fn(), children: "Button" },
-  // argTypes: {
-  //   size: {
-  //     options: [
-  //       "xs",
-  //       "sm",
-  //       "regular",
-  //       "lg",
-  //       "icon",
-  //     ] satisfies ButtonProps["size"][],
-  //     control: { type: "radio" },
-  //   },
-  // },
   parameters: {
     controls: { exclude: ["asChild", "variant"] },
   },
@@ -41,18 +29,24 @@ export const DefaultWithRightIcon: Story = {
   },
 };
 
-export const DefaultIcon: Story = {
-  name: "Default / Icon",
-  args: {
-    children: <Info />,
-    size: "icon",
-  },
-};
-
 export const DefaultSm: Story = {
   name: "Default / Small",
   args: {
     size: "sm",
+  },
+};
+export const DefaultLarge: Story = {
+  name: "Default / Large",
+  args: {
+    size: "lg",
+  },
+};
+
+export const DefaultIconSize: Story = {
+  name: "Default / Icon Size",
+  args: {
+    children: <Info />,
+    size: "icon",
   },
 };
 

@@ -52,7 +52,7 @@ const config = {
       },
     },
     boxShadow: {
-      "on-primary": "0 4px 20px 0 hsl(var(--primary-foreground) / 0.21)",
+      "on-background": "0 4px 20px 0 hsl(var(--foreground) / 0.21)",
     },
     fontSize: {
       xs: ["0.75rem", { lineHeight: "1rem" }],
@@ -65,7 +65,6 @@ const config = {
       "5xl": ["3rem", { lineHeight: "3.5rem" }],
     },
     borderRadius: {
-      none: "0",
       lg: "var(--radius)",
       md: "calc(var(--radius) - 2px)",
       sm: "calc(var(--radius) - 4px)",
