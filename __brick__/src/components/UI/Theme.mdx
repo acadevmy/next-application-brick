@@ -15,7 +15,7 @@ import tailwindConfig from '../../../tailwind.config.ts'
           return (
             <ColorItem
               title={key}
-              colors={{ [key]: value }}
+              colors={{{ [key]: value }}}
             />
           )
         } else {
@@ -30,7 +30,7 @@ import tailwindConfig from '../../../tailwind.config.ts'
                   return (
                     <ColorItem
                       title={`${key}-${subkey}`}
-                      colors={{ [subkey]: subvalue }}
+                      colors={{{ [subkey]: subvalue }}}
                     />
                   )
                 })}
@@ -50,7 +50,7 @@ import tailwindConfig from '../../../tailwind.config.ts'
       return (
         <div class='flex gap-8 items-center'>
           <div
-            style={{ borderRadius: value }}
+            style={{{ borderRadius: value }}}
             className='bg-foreground w-20 h-20 flex justify-center items-center rounded-md p-4'
           />
           <div>
@@ -74,7 +74,7 @@ import tailwindConfig from '../../../tailwind.config.ts'
       return (
         <div class='flex gap-8 items-center'>
           <div
-            style={{ boxShadow: value }}
+            style={{{ boxShadow: value }}}
             className='bg-background w-20 h-20 text-foreground flex justify-center items-center rounded-md p-4'
           />
           <div>
