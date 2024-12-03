@@ -1,46 +1,131 @@
 .button {
-  @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  @apply inline-flex items-center justify-center whitespace-nowrap rounded-md font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
 
   // variants
-  &.default {
+  &.primary {
     @apply bg-primary text-primary-foreground hover:bg-primary/90;
   }
 
-  &.destructive {
-    @apply bg-destructive text-destructive-foreground hover:bg-destructive/90;
+  &.secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/90;
   }
 
   &.outline {
-    @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground;
+    @apply border border-primary text-primary bg-background hover:bg-accent;
+
+    &.successColorTheme {
+      @apply text-success border-success;
+    }
   }
 
-  &.secondary {
-    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+  &.secondaryIcon {
+    @apply bg-background text-foreground hover:bg-background/90;
+
+    &.icon {
+      @apply p-1.5;
+
+      &>svg {
+        @apply h-4 w-4;
+      }
+    }
   }
 
   &.ghost {
     @apply hover:bg-accent hover:text-accent-foreground;
+
+    &.sm {
+      @apply font-normal p-2 text-sm;
+    }
+
+    &.primaryColorTheme {
+      @apply text-primary;
+    }
+
+    &.successColorTheme {
+      @apply text-success;
+    }
+
+    &.backgroundColorTheme {
+      @apply text-background hover:bg-secondary;
+    }
   }
 
+  &.activeLink,
   &.link {
-    @apply text-foreground underline-offset-4 hover:underline;
+    @apply underline-offset-4 hover:underline font-medium;
+
+    &.xs,
+    &.sm,
+    &.regular,
+    &.lg,
+    &.icon {
+      @apply p-0 h-max;
+    }
+
+    &.sm {
+      @apply text-sm;
+    }
+
+    &.primaryColorTheme {
+      @apply text-primary;
+    }
+
+    &.icon {
+      @apply hover:text-primary;
+
+      &>svg {
+        @apply h-8 w-8;
+      }
+    }
+
+    &.activeLink {
+      @apply underline;
+    }
   }
 
 
   // sizes
-  &.sm {
-    @apply h-9 rounded-md px-3;
+  &.xs {
+    @apply h-8 px-2 py-1.5 text-sm gap-1;
+
+    &>svg {
+      @apply h-5 w-5;
+    }
   }
 
-  &.md {
-    @apply h-10 px-4 py-2;
+  &.sm {
+    @apply h-10 px-4 py-2 text-base gap-2;
+
+    &>svg {
+      @apply h-5 w-5;
+    }
+  }
+
+  &.regular {
+    @apply h-12 px-8 py-3 text-base gap-3;
+
+    &>svg {
+      @apply h-5 w-5;
+    }
   }
 
   &.lg {
-    @apply h-11 rounded-md px-8;
+    @apply h-16 px-6 py-4 text-2xl gap-4;
+
+    &>svg {
+      @apply h-8 w-8;
+    }
   }
 
   &.icon {
-    @apply h-10 w-10;
+    @apply p-2.5;
+
+    &>svg {
+      @apply h-5 w-5;
+    }
+  }
+
+  &.fullWidth {
+    @apply w-full;
   }
 }
