@@ -1,0 +1,22 @@
+.spinner {
+  @apply text-center;
+  &.sm {
+    .spinnerIcon {
+      @apply h-6 w-6;
+    }
+  }
+
+  &.regular {
+    .spinnerIcon {
+      @apply h-8 w-8;
+    }
+  }
+
+  &.fullscreen {
+    @apply absolute inset-0 flex items-center justify-center;
+  }
+
+  .spinnerIcon {
+    @apply inline animate-spin;
+  }
+}

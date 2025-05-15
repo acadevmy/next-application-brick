@@ -1,0 +1,10 @@
+{
+  "hello": "Ciao",
+  "genericError": "Errore generico",
+  "genericErrorTitle": "Errore!",
+  "contactUs": "Contattaci",
+  "errorNotFound": "Errore 404",
+  "errorNotFoundTitle": "Ci dispiace, questa pagina non esiste",
+  "goToHome": "Vai alla home",
+  "error-code/generic": "Qualcosa è andato storto"
+}

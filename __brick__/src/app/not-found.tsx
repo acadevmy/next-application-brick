@@ -1,9 +1,19 @@
-const NotFoundPage = () => {
+"use client";
+
+import Error from "next/error";
+
+// This page renders when a route like `/unknown.txt` is requested.
+// In this case, the layout at `app/[locale]/layout.tsx` receives
+// an invalid value as the `[locale]` param and calls `notFound()`.
+
+const GlobalNotFound = () => {
   return (
-    <div>
-      <h2>404 | Not Found</h2>
-    </div>
+    <html lang="en">
+      <body>
+        <Error statusCode={404} />;
+      </body>
+    </html>
   );
 };
 
-export default NotFoundPage;
+export default GlobalNotFound;

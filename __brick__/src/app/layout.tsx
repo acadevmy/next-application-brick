@@ -1,31 +1,16 @@
+// Since we have a `not-found.tsx` page on the root, a layout file
+// is required, even if it's just passing children through.
+//
+// This file should remain minimal, to maintain a clean separation
+// of concerns, avoid adding providers or layout logic here; instead,
+// implement them in more specific layouts (e.g., `[locale]/layout.tsx`).
+
 import "./globals.css";
 
-import type { Metadata } from "next";
-import NextTopLoader from "nextjs-toploader";
+import { ReactNode } from "react";
 
-import { geistMono, inter } from "@/fonts";
-import ReactQueryProvider from "@/reactQuery/ReactQueryProvider";
-import { getGlobalMetadata } from "@/utils/seoMetadata";
-import { DEFAULT_EMPTY_STRING } from "@/utils/utilityConstants";
-
-export const generateMetadata = async (): Promise<Metadata | null> => {
-  return getGlobalMetadata(DEFAULT_EMPTY_STRING);
-};
-
-const RootLayout = ({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) => {
-  return (
-    <html lang="en">
-      <body className={`${inter.className} ${geistMono.variable} antialiased`}>
-        <NextTopLoader color="#000" showSpinner={false} />
-
-        <ReactQueryProvider>{children}</ReactQueryProvider>
-      </body>
-    </html>
-  );
+const RootLayout = ({ children }: { children: ReactNode }) => {
+  return children;
 };
 
 export default RootLayout;

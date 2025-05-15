@@ -8,11 +8,11 @@ import {
 import { cn } from "@/utils/style";
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant, size, asChild = false, ...props }, ref) => {
+  ({ variant, size, colorTheme, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size }))}
+        className={cn(buttonVariants({ variant, size, colorTheme }))}
         ref={ref}
         {...props}
       />

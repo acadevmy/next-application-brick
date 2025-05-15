@@ -7,9 +7,9 @@ type GetHrefProps = {
 };
 
 export const getHref = ({ slug, queryParams, rewriteUrl }: GetHrefProps) => {
-  if (rewriteUrl) return `/${rewriteUrl}/`;
+  if (rewriteUrl) return `/${rewriteUrl}`;
 
   const params = new URLSearchParams(queryParams);
 
-  return `/${isString(slug) ? slug : slug.join("/")}${params.toString() ? `?${params.toString()}` : "/"}`;
+  return `/${isString(slug) ? slug : slug.join("/")}${params.toString() ? `?${params.toString()}` : ""}`;
 };

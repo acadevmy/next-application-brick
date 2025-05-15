@@ -1,0 +1,24 @@
+.alert {
+  @apply relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground;
+
+  &.default {
+    @apply bg-background text-foreground;
+  }
+
+  &.destructive {
+    @apply bg-destructive/10 border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive;
+  }
+
+  &.lg {
+    @apply py-8 [&>svg~*]:pl-16 [&>svg]:left-8 [&>svg]:top-8;
+  }
+}
+
+.alertTitle {
+  @apply mb-1;
+}
+
+.alertDescription {
+  @apply text-sm [&_p]:leading-relaxed;
+}
+
