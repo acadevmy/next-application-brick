@@ -1,21 +1,20 @@
 import { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 
 import {
   DynamicTimeZonePageParamsRoute,
   DynamicTimeZonePageProps,
 } from "@/appTypes/PageProps";
-import { fetchAvailableTimezones, fetchTimeApiDataByTimeZone } from "@/data";
+import { fetchTimeApiDataByTimeZone } from "@/data";
+import { Link } from "@/i18n/routing";
 import { generateCanonicalUrl, getSeoMetadata } from "@/utils/seoMetadata";
 
 export const generateMetadata = async ({
   params,
 }: DynamicTimeZonePageProps): Promise<Metadata | null> => {
   const paramsData = await params;
-  const time_zone = paramsData.time_zone;
+  const { time_zone } = paramsData;
   if (time_zone) return null;
-
   const defaultCanonicalUrl = generateCanonicalUrl({
     type: "params",
     params: { ...paramsData, type: "dynamic_time_zone" },
@@ -31,15 +30,11 @@ export const generateMetadata = async ({
 };
 
 export const generateStaticParams = async () => {
-  const availableTimezones = await fetchAvailableTimezones();
-
-  return availableTimezones.map((item) => ({
-    time_zone: item,
-  })) satisfies DynamicTimeZonePageParamsRoute[];
+  return [] satisfies DynamicTimeZonePageParamsRoute[];
 };
 
 const StaticDataTimeZonePage = async ({ params }: DynamicTimeZonePageProps) => {
-  const time_zone = (await params).time_zone;
+  const { time_zone } = await params;
 
   const timeApiData = await fetchTimeApiDataByTimeZone(time_zone);
 

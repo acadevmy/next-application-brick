@@ -17,6 +17,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "experimentalDecorators": true,
     "plugins": [
       {
         "name": "next"
@@ -25,14 +26,21 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@/publicAssets/*": [
+        "./public/*"
+      ],
+      "@/tailwindConfig": [
+        "./tailwind.config.ts"
       ]
     }
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "next-env.d.ts",
+    "dist/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

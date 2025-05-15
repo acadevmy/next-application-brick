@@ -1,4 +1,4 @@
-import { AvailableTimezones, TimeApiData } from "@/data/types";
+import { TimeApiData } from "@/reactQuery/time/types";
 
 export const fetchTimeApiData = async () => {
   const response = await fetch(
@@ -23,13 +23,5 @@ export const fetchTimeApiDataByTimeZone = async (timeZone: string) => {
     },
   );
   const payload = (await response.json()) as TimeApiData;
-  return payload;
-};
-
-export const fetchAvailableTimezones = async () => {
-  const response = await fetch(
-    "https://timeapi.io/api/timezone/availabletimezones",
-  );
-  const payload = (await response.json()) as AvailableTimezones;
   return payload;
 };

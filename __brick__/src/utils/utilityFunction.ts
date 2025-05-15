@@ -1,5 +1,6 @@
 import he from "he";
 
+import { Locale } from "@/i18n/i18nConfig";
 import { isStringNotEmpty } from "@/utils/typeCheck";
 import {
   DEFAULT_CONCATENATE_SEPARATOR,
@@ -71,3 +72,7 @@ export const createMetaDescription = (description: string) =>
     inputString: stripHtml(he.decode(description)),
     charsLength: DEFAULT_META_DESCRIPTION_LENGTH,
   });
+
+export const formatDateToLocal = (date: string, locale: Locale) => {
+  return new Intl.DateTimeFormat(locale).format(new Date(date));
+};

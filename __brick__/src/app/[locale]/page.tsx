@@ -1,14 +1,13 @@
 import { Metadata } from "next";
 import Image from "next/image";
-import { Suspense } from "react";
 
-import TimeApiReactRouter from "@/components/TimeApiReactRouter/TimeApiReactRouter";
+import { HomePageProps } from "@/appTypes/PageProps";
 import { generateCanonicalUrl, getSeoMetadata } from "@/utils/seoMetadata";
 
 export const generateMetadata = async (): Promise<Metadata | null> => {
   const defaultCanonicalUrl = generateCanonicalUrl({
     type: "href",
-    href: "/react-query",
+    href: "/",
     baseUrl: process.env.{{applicationName.constantCase()}}_DOMAIN as string,
   });
 
@@ -20,7 +19,7 @@ export const generateMetadata = async (): Promise<Metadata | null> => {
   });
 };
 
-const ReactQueryPage = async () => {
+const HomePage = async ({}: HomePageProps) => {
   return (
     <main className="flex flex-col justify-center items-center min-h-screen">
       <Image
@@ -30,13 +29,9 @@ const ReactQueryPage = async () => {
         height={38}
         priority
       />
-      <p className="text-xl mt-2 font-mono">react-router</p>
-
-      <Suspense>
-        <TimeApiReactRouter />
-      </Suspense>
+      <p className="font-mono mt-4">nextjs-brick</p>
     </main>
   );
 };
 
-export default ReactQueryPage;
+export default HomePage;

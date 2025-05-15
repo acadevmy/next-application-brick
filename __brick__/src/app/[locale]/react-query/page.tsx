@@ -1,14 +1,15 @@
 import { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import { Suspense } from "react";
 
-import { fetchTimeApiData } from "@/data";
+import { ReactQueryPageProps } from "@/appTypes/PageProps";
+import TimeApiReactRouter from "@/components/TimeApiReactRouter/TimeApiReactRouter";
 import { generateCanonicalUrl, getSeoMetadata } from "@/utils/seoMetadata";
 
 export const generateMetadata = async (): Promise<Metadata | null> => {
   const defaultCanonicalUrl = generateCanonicalUrl({
     type: "href",
-    href: "/static-data",
+    href: "/react-query",
     baseUrl: process.env.{{applicationName.constantCase()}}_DOMAIN as string,
   });
 
@@ -20,9 +21,7 @@ export const generateMetadata = async (): Promise<Metadata | null> => {
   });
 };
 
-const StaticDataPage = async () => {
-  const timeApiData = await fetchTimeApiData();
-
+const ReactQueryPage = async ({}: ReactQueryPageProps) => {
   return (
     <main className="flex flex-col justify-center items-center min-h-screen">
       <Image
@@ -32,19 +31,13 @@ const StaticDataPage = async () => {
         height={38}
         priority
       />
-      <p className="font-mono">fetch-static-data</p>
-      <p className="mt-4 mb-10">
-        last update: <span className="font-bold">{timeApiData.dateTime}</span>
-      </p>
-      <Link
-        className=" bg-orange-500 text-white px-4 py-2 rounded-md"
-        href="/api/revalidate?tag=static-data"
-        prefetch={false}
-      >
-        revalidate
-      </Link>
+      <p className="text-xl mt-2 font-mono">react-router</p>
+
+      <Suspense>
+        <TimeApiReactRouter />
+      </Suspense>
     </main>
   );
 };
 
-export default StaticDataPage;
+export default ReactQueryPage;

@@ -19,6 +19,33 @@ export const handleRequest = async <TData>(
     if (error instanceof ZodError)
       return Response.json({ error }, { status: 400 });
 
-    return Response.json({ error }, { status: 500 });
+    // TODO: handle ApplicationError
+
+    if (error instanceof Error)
+      return Response.json({ error: error.message }, { status: 500 });
+
+    return Response.json(
+      { error: "Route handler generic error" },
+      { status: 500 },
+    );
   }
+};
+
+export const fetchRouteHandler = async <TData>(
+  url: string,
+  init: RequestInit | undefined = undefined,
+) => {
+  const response = await fetch(url, init);
+
+  if (!response.ok) {
+    const { error } = await response.json();
+
+    // TODO: handle error
+    const ErrorClass = Error;
+    throw new ErrorClass(error);
+  }
+
+  const responseData =
+    (await response.json()) as RouteHandlerResponseType<TData>;
+  return responseData;
 };
