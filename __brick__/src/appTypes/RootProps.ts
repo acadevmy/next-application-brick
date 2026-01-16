@@ -8,6 +8,4 @@ export type RootParams = {
 };
 
 // props
-export type RootProps = {
-  params: Promise<RootParams>;
-};
+export type RootProps = LayoutProps<"/[locale]">;

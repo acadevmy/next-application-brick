@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { NextIntlClientProvider } from "next-intl";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { ReactNode } from "react";
 
@@ -18,7 +18,7 @@ const I18nProvider = async ({
   staticPages,
 }: I18nProviderProps) => {
   // Ensure that the incoming `locale` is valid
-  if (!routing.locales.includes(locale as any)) {
+  if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
 

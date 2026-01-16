@@ -2,22 +2,22 @@ import { Metadata } from "next";
 import Image from "next/image";
 
 import {
-  DynamicTimeZonePageParamsRoute,
-  DynamicTimeZonePageProps,
+  DynamicParamPageParamsRoute,
+  DynamicParamPageProps,
 } from "@/appTypes/PageProps";
-import { fetchTimeApiDataByTimeZone } from "@/data";
+import { fetchExampleData } from "@/data";
 import { Link } from "@/i18n/routing";
 import { generateCanonicalUrl, getSeoMetadata } from "@/utils/seoMetadata";
 
 export const generateMetadata = async ({
   params,
-}: DynamicTimeZonePageProps): Promise<Metadata | null> => {
+}: DynamicParamPageProps): Promise<Metadata | null> => {
   const paramsData = await params;
-  const { time_zone } = paramsData;
-  if (time_zone) return null;
+  const { param } = paramsData;
+  if (param) return null;
   const defaultCanonicalUrl = generateCanonicalUrl({
     type: "params",
-    params: { ...paramsData, type: "dynamic_time_zone" },
+    params: { ...paramsData, type: "dynamic_param" },
     baseUrl: process.env.{{applicationName.constantCase()}}_DOMAIN as string,
   });
 
@@ -30,13 +30,13 @@ export const generateMetadata = async ({
 };
 
 export const generateStaticParams = async () => {
-  return [] satisfies DynamicTimeZonePageParamsRoute[];
+  return [] satisfies DynamicParamPageParamsRoute[];
 };
 
-const StaticDataTimeZonePage = async ({ params }: DynamicTimeZonePageProps) => {
-  const { time_zone } = await params;
+const DynamicParamPage = async ({ params }: DynamicParamPageProps) => {
+  const { locale, param } = await params;
 
-  const timeApiData = await fetchTimeApiDataByTimeZone(time_zone);
+  const exampleData = await fetchExampleData(param);
 
   return (
     <main className="flex flex-col justify-center items-center min-h-screen">
@@ -48,13 +48,10 @@ const StaticDataTimeZonePage = async ({ params }: DynamicTimeZonePageProps) => {
         priority
       />
       <p className="text-xl mt-2 font-mono">fetch-static-data</p>
-      <p className="mt-4 mb-10">
-        last update {timeApiData.timeZone}:{" "}
-        <span className="font-bold">{timeApiData.dateTime}</span>
-      </p>
+      <p className="mt-4 mb-10">{exampleData.message}</p>
       <Link
         className=" bg-orange-500 text-white px-4 py-2 rounded-md"
-        href={`/api/revalidate?tag=static-data-${timeApiData.timeZone}`}
+        href={`/api/revalidate?path=/${locale}/static-data/${param}`}
         prefetch={false}
       >
         revalidate
@@ -63,4 +60,4 @@ const StaticDataTimeZonePage = async ({ params }: DynamicTimeZonePageProps) => {
   );
 };
 
-export default StaticDataTimeZonePage;
+export default DynamicParamPage;

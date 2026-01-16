@@ -1,10 +1,11 @@
-import type { Preview } from "@storybook/react";
 import "../src/app/globals.css";
-import nextIntl from "./next-intl";
-import { inter, geistMono } from "../src/fonts";
 
+import type { Preview } from "@storybook/nextjs-vite";
 import { NuqsAdapter } from "nuqs/adapters/react";
 import React from "react";
+
+import { geistMono, inter } from "../src/fonts";
+import nextIntl from "./next-intl";
 
 const preview: Preview = {
   parameters: {

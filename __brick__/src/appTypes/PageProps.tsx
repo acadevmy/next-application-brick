@@ -16,17 +16,16 @@ export interface StaticDataPageProps extends RootProps {
   params: Promise<StaticDataPageParamsRoute>;
 }
 
-export interface DynamicTimeZonePageParamsRoute extends RootParams {
-  time_zone: string;
+export interface DynamicParamPageParamsRoute extends RootParams {
+  param: string;
 }
 
-export interface DynamicTimeZonePageParams
-  extends DynamicTimeZonePageParamsRoute {
-  type: "dynamic_time_zone";
+export interface DynamicParamPageParams extends DynamicParamPageParamsRoute {
+  type: "dynamic_param";
 }
 
-export interface DynamicTimeZonePageProps extends RootProps {
-  params: Promise<DynamicTimeZonePageParamsRoute>;
+export interface DynamicParamPageProps extends RootProps {
+  params: Promise<DynamicParamPageParamsRoute>;
 }
 
 export interface ReactQueryPageParamsRoute extends RootParams {}
@@ -42,5 +41,5 @@ export interface ReactQueryPageProps extends RootProps {
 export type PagesParams =
   | HomePageParams
   | StaticDataPageParams
-  | DynamicTimeZonePageParams
+  | DynamicParamPageParams
   | ReactQueryPageParams;

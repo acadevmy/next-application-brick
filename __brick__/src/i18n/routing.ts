@@ -3,10 +3,8 @@ import { createNavigation } from "next-intl/navigation";
 import { defineRouting } from "next-intl/routing";
 import { getLocale as i18nGetLocale } from "next-intl/server";
 
-import { defaultLocale, Locale, locales } from "@/i18n/i18nConfig";
-
+import { defaultLocale, Locale, locales } from "./i18nConfig";
 import useI18nRouter from "./useI18nRouter";
-
 export const routing = defineRouting({
   // A list of all locales that are supported
   locales,

@@ -30,6 +30,7 @@ const HomePage = async ({}: HomePageProps) => {
         priority
       />
       <p className="font-mono mt-4">nextjs-brick</p>
+      <p>{process.env.FRONTEND_VERCEL_ORG_ID}</p>
     </main>
   );
 };

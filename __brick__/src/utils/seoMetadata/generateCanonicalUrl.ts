@@ -9,9 +9,9 @@ export const generateCanonicalUrl = (props: GenerateCanonicalUrlProps) => {
   const { params, rewriteUrl, baseUrl } = props;
 
   switch (params?.type) {
-    case "dynamic_time_zone":
+    case "dynamic_param":
       return `${baseUrl}/${getHref({
-        slug: params.time_zone,
+        slug: params.param,
         rewriteUrl,
       })}`;
 

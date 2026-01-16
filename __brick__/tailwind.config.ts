@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 const config = {
   darkMode: ["class"],
@@ -40,7 +41,8 @@ const config = {
         dark: "hsl(var(--secondary-dark))",
         "dark-foreground": "hsl(var(--secondary-dark-foreground))",
         "dark-variant": "hsl(var(--secondary-dark-variant))",
-        "dark-variant-foreground": "hsl(var(--secondary-dark-variant-foreground))",
+        "dark-variant-foreground":
+          "hsl(var(--secondary-dark-variant-foreground))",
       },
       ["dark-grey"]: {
         DEFAULT: "hsl(var(--dark-grey))",
@@ -122,7 +124,7 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;
 
 export default config;
