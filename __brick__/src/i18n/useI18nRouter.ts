@@ -1,3 +1,4 @@
+// TODO: check is this needed. Maybe we can use useLinkStatus from next 16 instead of NProgress
 "use client";
 import { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import * as NProgress from "nprogress";

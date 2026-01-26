@@ -1,1 +1,1 @@
-export const getTimeQueryKey = "getTime";
+export const getExampleQueryKey = "getExample";

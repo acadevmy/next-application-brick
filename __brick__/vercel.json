@@ -1,0 +1,7 @@
+{
+    "version": 2,
+    "regions": ["cdg1"],
+    "framework": "nextjs",
+    "installCommand": "echo \"Install (SKIPPED): pnpm deploy bundles local libraries into node_modules. Running pnpm install again would overwrite them.\"",
+    "buildCommand": "pnpm build"
+}

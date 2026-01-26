@@ -3,6 +3,7 @@ import NextTopLoader from "nextjs-toploader";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import { RootProps } from "@/appTypes/RootProps";
+import { parseLocale } from "@/appTypes/utility";
 import Toaster from "@/components/UI/Atoms/Sonner";
 import { geistMono, inter } from "@/fonts";
 import I18nProvider from "@/i18n/I18nProvider";
@@ -22,7 +23,7 @@ const RootLayout = async ({
 }> &
   RootProps) => {
   const paramsData = await params;
-  const { locale } = paramsData;
+  const locale = parseLocale(paramsData.locale);
 
   return (
     <html lang={locale}>

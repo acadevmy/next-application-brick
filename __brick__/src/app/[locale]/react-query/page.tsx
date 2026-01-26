@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Suspense } from "react";
 
 import { ReactQueryPageProps } from "@/appTypes/PageProps";
-import TimeApiReactRouter from "@/components/TimeApiReactRouter/TimeApiReactRouter";
+import ExampleReactRouter from "@/components/ExampleReactRouter/ExampleReactRouter";
 import { generateCanonicalUrl, getSeoMetadata } from "@/utils/seoMetadata";
 
 export const generateMetadata = async (): Promise<Metadata | null> => {
@@ -34,7 +34,7 @@ const ReactQueryPage = async ({}: ReactQueryPageProps) => {
       <p className="text-xl mt-2 font-mono">react-router</p>
 
       <Suspense>
-        <TimeApiReactRouter />
+        <ExampleReactRouter />
       </Suspense>
     </main>
   );

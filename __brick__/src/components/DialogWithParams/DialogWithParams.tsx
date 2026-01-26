@@ -3,7 +3,7 @@
 import { DialogWithParamsProps } from "@/components/DialogWithParams/DialogWithParamsProps";
 import Dialog from "@/components/UI/Molecules/Dialog";
 
-import { useDialogWithParams } from "../UI/hooks/useDialogWithParams";
+import { useDialogWithParams } from "./hooks/useDialogWithParams";
 
 const DialogWithParams = ({
   children,

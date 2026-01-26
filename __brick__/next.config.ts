@@ -1,10 +1,10 @@
+import { SentryBuildOptions, withSentryConfig } from "@sentry/nextjs";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin();
 
 import { env } from "@dotenv-run/core";
-import { SentryBuildOptions, withSentryConfig } from "@sentry/nextjs";
-import { NextConfig } from "next";
+import type { NextConfig } from "next";
 
 const { raw } = env({
   root: "../..",
@@ -30,15 +30,14 @@ const nextConfig: NextConfig = {
   },
 };
 
-type NewType = SentryBuildOptions;
-
-const sentryBuildOptions: NewType = {
+const sentryBuildOptions: SentryBuildOptions = {
   org: process.env.{{applicationName.constantCase()}}_SENTRY_ORG,
   project: process.env.{{applicationName.constantCase()}}_SENTRY_PROJECT,
-  authToken: process.env.{{applicationName.constantCase()}}_SENTRY_AUTH_TOKEN,
-  silent: true, // Suppresses all logs
+  // Only print logs for uploading source maps in CI
+  silent: !process.env.CI,
+
   // For all available options, see:
-  // https://github.com/getsentry/sentry-webpack-plugin#options
+  // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
   // Upload a larger set of source maps for prettier stack traces (increases build time)
   widenClientFileUpload: true,
@@ -49,17 +48,19 @@ const sentryBuildOptions: NewType = {
   // side errors will fail.
   // tunnelRoute: "/monitoring",
 
-  // Hides source maps from generated client bundles
-  hideSourceMaps: true,
+  webpack: {
+    // Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)
+    // See the following for more information:
+    // https://docs.sentry.io/product/crons/
+    // https://vercel.com/docs/cron-jobs
+    automaticVercelMonitors: true,
 
-  // Automatically tree-shake Sentry logger statements to reduce bundle size
-  disableLogger: true,
-
-  // Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)
-  // See the following for more information:
-  // https://docs.sentry.io/product/crons/
-  // https://vercel.com/docs/cron-jobs
-  automaticVercelMonitors: true,
+    // Tree-shaking options for reducing bundle size
+    treeshake: {
+      // Automatically tree-shake Sentry logger statements to reduce bundle size
+      removeDebugLogging: true,
+    },
+  },
 };
 
 export default withSentryConfig(withNextIntl(nextConfig), sentryBuildOptions);

@@ -1,8 +1,11 @@
 import { Metadata } from "next";
 import Image from "next/image";
 
-import { StaticDataPageProps } from "@/appTypes/PageProps";
-import { fetchTimeApiData } from "@/data";
+import {
+  StaticDataPageParamsRoute,
+  StaticDataPageProps,
+} from "@/appTypes/PageProps";
+import { fetchExampleData } from "@/data";
 import { Link } from "@/i18n/routing";
 import { generateCanonicalUrl, getSeoMetadata } from "@/utils/seoMetadata";
 
@@ -21,8 +24,13 @@ export const generateMetadata = async (): Promise<Metadata | null> => {
   });
 };
 
-const StaticDataPage = async ({}: StaticDataPageProps) => {
-  const timeApiData = await fetchTimeApiData();
+export const generateStaticParams = async () => {
+  return [] satisfies StaticDataPageParamsRoute[];
+};
+
+const StaticDataPage = async ({ params }: StaticDataPageProps) => {
+  const { locale } = await params;
+  const exampleData = await fetchExampleData("test");
 
   return (
     <main className="flex flex-col justify-center items-center min-h-screen">
@@ -35,11 +43,11 @@ const StaticDataPage = async ({}: StaticDataPageProps) => {
       />
       <p className="font-mono">fetch-static-data</p>
       <p className="mt-4 mb-10">
-        last update: <span className="font-bold">{timeApiData.dateTime}</span>
+        <span className="font-bold">{exampleData.message}</span>
       </p>
       <Link
         className=" bg-orange-500 text-white px-4 py-2 rounded-md"
-        href="/api/revalidate?tag=static-data"
+        href={`/api/revalidate?path=/${locale}/static-data`}
         prefetch={false}
       >
         revalidate
