@@ -4,29 +4,29 @@
 
 import * as Sentry from "@sentry/nextjs";
 
+import {
+  SENTRY_DATA_COLLECTION,
+  SENTRY_DSN,
+  SENTRY_ENABLED,
+} from "@/lib/sentry/config";
+
 Sentry.init({
-  enabled: Boolean(Number(process.env.NEXT_PUBLIC_{{applicationName.constantCase()}}_SENTRY_ENABLED)),
-  dsn: process.env.NEXT_PUBLIC_{{applicationName.constantCase()}}_SENTRY_DSN,
+  enabled: SENTRY_ENABLED,
+  dsn: SENTRY_DSN,
 
-  // Add optional integrations for additional features
-  integrations: [Sentry.replayIntegration()],
+  // Session Replay is off: it is the heaviest part of the SDK and records the
+  // user's screen, which needs its own privacy review. Add
+  // `replayIntegration()` per project if you need it.
 
-  // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
-  tracesSampleRate: 1,
-  // Enable logs to be sent to Sentry
-  enableLogs: true,
+  // Browser tracing is off: `browserTracingIntegration` is in the defaults and
+  // instruments every page load (PerformanceObservers, fetch/XHR/history
+  // wrapping) whatever the sample rate, which costs main-thread time on
+  // mobile. Errors are still reported; server and edge tracing are untouched.
+  integrations: (defaults) =>
+    defaults.filter(({ name }) => name !== "BrowserTracing"),
 
-  // Define how likely Replay events are sampled.
-  // This sets the sample rate to be 10%. You may want this to be 100% while
-  // in development and sample at a lower rate in production
-  replaysSessionSampleRate: 0.1,
-
-  // Define how likely Replay events are sampled when an error occurs.
-  replaysOnErrorSampleRate: 1.0,
-
-  // Enable sending user PII (Personally Identifiable Information)
-  // https://docs.sentry.io/platforms/javascript/guides/nextjs/configuration/options/#sendDefaultPii
-  sendDefaultPii: true,
+  // No personal data by default: see SENTRY_DATA_COLLECTION.
+  dataCollection: SENTRY_DATA_COLLECTION,
 });
 
 export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;

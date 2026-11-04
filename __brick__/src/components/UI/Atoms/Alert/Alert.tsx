@@ -1,49 +1,69 @@
+import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
-import {
-  AlertProps,
-  AlertTitleProps,
-  alertVariants,
-} from "@/components/UI/Atoms/Alert";
-import styles from "@/components/UI/Atoms/Alert/Alert.module.scss";
-import Typography from "@/components/UI/Typography";
-import { cn } from "@/utils/style";
+import { Typography } from "@/components/UI/Atoms/Typography";
+import { cn } from "@/components/UI/Foundations/style";
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
-  ({ className, variant, size, ...props }, ref) => (
-    <div
-      ref={ref}
-      role="alert"
-      className={cn(alertVariants({ variant, size }), className)}
-      {...props}
-    />
-  ),
+const alertVariants = cva(
+  "relative grid w-full grid-cols-[0_1fr] items-start gap-y-2 rounded-lg border px-4 py-3 text-sm has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>svg]:gap-x-4 [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
+  {
+    variants: {
+      variant: {
+        default: "bg-card text-card-foreground",
+        destructive:
+          "border-destructive/30 bg-destructive/10 text-destructive *:data-[slot=alert-description]:text-destructive/90",
+        success:
+          "border-transparent bg-success text-success-foreground *:data-[slot=alert-description]:text-success-foreground/90",
+        warning:
+          "border-transparent bg-warning text-warning-foreground *:data-[slot=alert-description]:text-warning-foreground/90",
+        info: "border-transparent bg-info text-info-foreground *:data-[slot=alert-description]:text-info-foreground/90",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  },
 );
-Alert.displayName = "Alert";
 
-const AlertTitle = React.forwardRef<HTMLParagraphElement, AlertTitleProps>(
-  ({ className, ...props }, ref) => (
-    <Typography
-      ref={ref}
-      variant="h5"
-      className={cn(styles.alertTitle, className)}
-      {...props}
-    />
-  ),
-);
-AlertTitle.displayName = "AlertTitle";
-
-const AlertDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <Typography
-    ref={ref}
-    className={cn(styles.alertDescription, className)}
+const Alert = ({
+  className,
+  variant,
+  ...props
+}: React.ComponentProps<"div"> & VariantProps<typeof alertVariants>) => (
+  <div
+    data-slot="alert"
+    role="alert"
+    className={cn(alertVariants({ variant }), className)}
     {...props}
   />
-));
-AlertDescription.displayName = "AlertDescription";
+);
 
-export default Alert;
-export { AlertDescription, AlertTitle };
+const AlertTitle = ({ className, ...props }: React.ComponentProps<"div">) => (
+  <Typography
+    as="div"
+    variant="heading-6"
+    weight="semibold"
+    data-slot="alert-title"
+    className={cn("col-start-2 tracking-tight", className)}
+    {...props}
+  />
+);
+
+const AlertDescription = ({
+  className,
+  ...props
+}: React.ComponentProps<"div">) => (
+  <Typography
+    as="div"
+    variant="heading-6"
+    weight="semibold"
+    data-slot="alert-description"
+    className={cn(
+      "col-start-2 grid justify-items-start gap-1 [&_p]:leading-relaxed",
+      className,
+    )}
+    {...props}
+  />
+);
+
+export { Alert, AlertDescription, AlertTitle, alertVariants };

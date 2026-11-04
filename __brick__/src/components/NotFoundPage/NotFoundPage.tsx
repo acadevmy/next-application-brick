@@ -2,24 +2,22 @@
 
 import { useTranslations } from "next-intl";
 
+import { ErrorPageLayout } from "@/components/ErrorPage/ErrorPageLayout";
 import Button from "@/components/UI/Atoms/Button";
-import ErrorSection from "@/components/UI/Molecules/ErrorSection";
-import { Link } from "@/i18n/routing";
-import { HOMEPAGE_PATH } from "@/utils/utilityConstants";
+import { Link } from "@/i18n/navigation";
+import { HOMEPAGE_PATH } from "@/lib/site/routes";
 
 const NotFoundPage = () => {
   const t = useTranslations();
 
   return (
-    <ErrorSection
+    <ErrorPageLayout
       pretitle={t("errorNotFound")}
       title={t("errorNotFoundTitle")}
-      Buttons={
-        <>
-          <Button asChild>
-            <Link href={HOMEPAGE_PATH}>{t("goToHome")}</Link>
-          </Button>
-        </>
+      actions={
+        <Button asChild>
+          <Link href={HOMEPAGE_PATH}>{t("goToHome")}</Link>
+        </Button>
       }
     />
   );

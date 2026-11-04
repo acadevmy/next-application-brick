@@ -1,2 +1,2 @@
-export { default } from "./Input";
-export * from "./InputProps";
+export { Input } from "./Input";
+export { PasswordInput } from "./PasswordInput";

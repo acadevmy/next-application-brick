@@ -1,2 +1,2 @@
 export { default } from "./Sonner";
-export * from "./SonnerProps";
+export { default as Toaster } from "./Sonner";

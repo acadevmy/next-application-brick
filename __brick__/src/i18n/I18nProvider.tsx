@@ -1,41 +1,20 @@
-import { notFound } from "next/navigation";
-import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import { NextIntlClientProvider } from "next-intl";
 import { ReactNode } from "react";
 
-import { Locale } from "./i18nConfig";
-import { routing } from "./routing";
+import { ZodLocaleProvider } from "@/lib/zod/ZodLocaleProvider";
 
 type I18nProviderProps = {
-  locale: Locale;
   children: ReactNode;
-  staticPages?: boolean;
 };
 
-const I18nProvider = async ({
-  locale,
-  children,
-  staticPages,
-}: I18nProviderProps) => {
-  // Ensure that the incoming `locale` is valid
-  if (!hasLocale(routing.locales, locale)) {
-    notFound();
-  }
-
-  if (staticPages) {
-    // Enable static rendering
-    setRequestLocale(locale);
-  }
-
-  // Providing all messages to the client
-  // side is the easiest way to get started
-  const messages = await getMessages();
-
-  return (
-    <NextIntlClientProvider messages={messages}>
-      {children}
-    </NextIntlClientProvider>
-  );
-};
+/**
+ * Locale and messages come from `src/i18n/request.ts`: `NextIntlClientProvider`
+ * rendered by a Server Component inherits both, as in the next-intl starter.
+ */
+const I18nProvider = ({ children }: I18nProviderProps) => (
+  <NextIntlClientProvider>
+    <ZodLocaleProvider>{children}</ZodLocaleProvider>
+  </NextIntlClientProvider>
+);
 
 export default I18nProvider;

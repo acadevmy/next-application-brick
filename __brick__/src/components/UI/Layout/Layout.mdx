@@ -1,0 +1,156 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+import { Button } from "../Atoms/Button";
+import { Typography } from "../Atoms/Typography";
+import { Container } from "./Container";
+import { Inline } from "./Inline";
+import { Section } from "./Section";
+import { Stack } from "./Stack";
+import { Surface } from "./Surface";
+
+<Meta title="Design System/Layout" />
+
+# Layout — la gerarchia
+
+`Surface`, `Stack`, `Container` e `Section` sembrano sovrapporsi. Non lo sono:
+ognuno risponde a **una domanda diversa**, e si compongono fra loro. Nessuno fa
+il mestiere di un altro.
+
+| Componente | Risponde a | Fa | Non fa |
+|---|---|---|---|
+| **`Surface`** | *di che materiale è?* | tono (i figli ereditano il colore), radius, ombra, padding | non dispone i figli |
+| **`Stack` / `Inline`** | *come stanno i figli fra loro?* | direzione, gap dalla scala, allineamento | non colora, non vincola la larghezza |
+| **`Container`** | *quanto è larga la pagina?* | `max-width` + gutter laterale, centrato | non colora, non dà ritmo verticale |
+| **`Section`** | *dov'è questa banda nella pagina?* | ritmo verticale, gutter laterale, renderizza un `<section>` | **non** vincola la `max-width`, **non** colora |
+
+---
+
+## Uno per volta
+
+### `Surface` — il materiale
+
+Ri-punta i ruoli di colore per il proprio sottoalbero. I figli sono scritti una
+volta su `bg-background` e `text-foreground` e seguono il tono da soli:
+`Button` incluso, perché ogni tono ri-punta anche `--primary-*`.
+
+<Surface tone="accent" radius="card" padding="md">
+  <Stack gap="sm" align="start">
+    <Typography variant="heading-5" weight="semibold">Nessuna prop di colore qui dentro</Typography>
+    <Button>CTA</Button>
+  </Stack>
+</Surface>
+
+Non dispone nulla: se togli lo `Stack` qui sopra, i figli si impilano come
+farebbero in un `div` qualsiasi.
+
+### `Stack` e `Inline` — il rapporto fra i figli
+
+Il gap viene dalla scala di spacing, quindi il ritmo resta lo stesso ovunque.
+
+<Surface tone="muted" radius="card" padding="md">
+  <Stack gap="lg">
+    <Surface tone="neutral" radius="card" padding="sm">Primo</Surface>
+    <Surface tone="neutral" radius="card" padding="sm">Secondo</Surface>
+    <Inline gap="sm">
+      <Surface tone="info" radius="card" padding="sm">In riga</Surface>
+      <Surface tone="info" radius="card" padding="sm">In riga</Surface>
+    </Inline>
+  </Stack>
+</Surface>
+
+### `Container` — la larghezza di lettura
+
+Limita la larghezza massima, centra e aggiunge il gutter. Serve quando il
+contenuto non deve mai diventare più largo di quanto si legga comodamente.
+
+<Surface tone="muted" padding="sm">
+  <Container>
+    <Surface tone="neutral" radius="card" padding="sm">
+      <Typography variant="body-2">Centrato, con un tetto alla larghezza</Typography>
+    </Surface>
+  </Container>
+</Surface>
+
+### `Section` — la banda di pagina
+
+Dà il ritmo verticale fra una banda e l'altra e il gutter laterale. È a **tutta
+larghezza**: è la differenza con `Container`.
+
+<Surface tone="muted">
+  <Section>
+    <Surface tone="neutral" radius="card" padding="sm">
+      <Typography variant="body-2">Prima banda</Typography>
+    </Surface>
+  </Section>
+  <Section>
+    <Surface tone="neutral" radius="card" padding="sm">
+      <Typography variant="body-2">Seconda banda: fra le due c'è py-section</Typography>
+    </Surface>
+  </Section>
+</Surface>
+
+---
+
+## Composti
+
+Nella pratica si annidano in quest'ordine, dall'esterno verso l'interno:
+
+```
+Section        ritmo della pagina
+ └─ Container  larghezza di lettura   (solo quando serve un tetto)
+     └─ Surface    materiale
+         └─ Stack      rapporto fra i figli
+             └─ contenuto
+```
+
+<Section>
+  <Container>
+    <Surface tone="info" radius="card" padding="lg">
+      <Stack gap="md" align="start">
+        <Typography variant="heading-4" weight="semibold">Tutti e quattro insieme</Typography>
+        <Typography variant="body-1">
+          Section dà il ritmo, Container il tetto alla larghezza, Surface il
+          colore e il padding, Stack lo spazio fra gli elementi.
+        </Typography>
+        <Button>Azione</Button>
+      </Stack>
+    </Surface>
+  </Container>
+</Section>
+
+---
+
+## Quale scelgo?
+
+- Devo **colorare** qualcosa, o dargli un raggio, un'ombra, un padding interno →
+  `Surface`.
+- Devo mettere **spazio fra elementi fratelli** → `Stack` (verticale) o `Inline`
+  (orizzontale). Mai `gap-*` scritto a mano.
+- Il contenuto **non deve superare una larghezza** → `Container`.
+- Sto aprendo una **nuova banda della pagina** → `Section`.
+
+Si sommano: una banda colorata a tutta larghezza con contenuto centrato è
+`Section` → `Surface` → `Container`. Una card dentro una griglia è solo
+`Surface` → `Stack`, perché non è né una banda né una colonna di lettura.
+
+---
+
+## Le confusioni ricorrenti
+
+**`Container` o `Section`?** Entrambi mettono il gutter laterale, ma solo
+`Container` limita la larghezza e centra. Se la banda deve arrivare ai bordi
+dello schermo — quasi sempre quando è colorata — è `Section`.
+
+**`Surface` o `Section`?** `Section` è costruita *sopra* `Surface` ma **non
+espone il tono**: il colore si compone, `Section` → `Surface`. Le due props che
+lo permettevano sono state rimosse proprio perché rendevano sfumato il confine —
+e non le usava nessuno.
+
+**Perché non `className="flex flex-col gap-4"`?** Perché il gap smetterebbe di
+venire dalla scala, e perché la regola `design-system/no-visual-overrides`
+blocca proprio quel tipo di classe sui componenti del design system: se serve un
+rapporto diverso fra i figli, è `Stack` con un `gap` diverso.
+
+**E il padding di pagina?** Non si scrive mai a mano: `Section` lo mette con
+`contentInset`, `Container` con il proprio gutter. Entrambi leggono
+`--spacing-container-inline`, che è responsive.

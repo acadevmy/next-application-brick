@@ -1,11 +1,8 @@
 {
   "compilerOptions": {
+    "allowArbitraryExtensions": true,
     "target": "ES2017",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -17,33 +14,23 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "experimentalDecorators": true,
     "plugins": [
       {
         "name": "next"
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@/publicAssets/*": [
-        "./public/*"
-      ],
-      "@/tailwindConfig": [
-        "./tailwind.config.ts"
-      ]
+      "@/*": ["./src/*"],
+      "@/publicAssets/*": ["./public/*"]
     }
   },
   "include": [
+    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "next-env.d.ts",
-    "dist/types/**/*.ts"
+    "**/*.mts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
