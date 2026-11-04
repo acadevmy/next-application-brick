@@ -1,0 +1,67 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { ThemeColorsDoc } from "./ThemeColorsDoc";
+import { ThemeRadiusDoc } from "./ThemeRadiusDoc";
+
+<Meta title="Foundations/Theme" />
+
+# Foundations — Theme
+
+Token visivi e di layout definiti in `src/components/UI/Foundations/theme/theme.css` (`:root` e `@theme`). Nessun valore duplicato in componente.
+
+---
+
+## Colors
+
+Ruoli semantici con i nomi di shadcn, più `success`, `warning`, `info` e `inverted`. Uso: `bg-primary`, `text-muted-foreground`, `border-border`, ecc. I valori cambiano in `theme.css`, mai nei componenti.
+
+<ThemeColorsDoc />
+
+---
+
+## Radius
+
+Scala derivata da `--radius` (0.625rem), come in shadcn: `sm` −4px, `md` −2px, `lg` = base, `xl` +4px, `2xl` +8px… Card e dialog usano `rounded-card` / `rounded-dialog`, i campi `rounded-input`.
+
+<ThemeRadiusDoc />
+
+---
+
+## Typography
+
+Scala Title, Heading, Body, Caption in `globals.css` e nel componente **Typography**. Font: Geist (testo e titoli), Geist Mono (codice). Per varianti ed esempi vedi **UI / Atoms / Typography**.
+
+---
+
+## Spacing
+
+**Scala numerica (Tailwind)** — Usare solo questi valori per padding, margin e gap:
+
+<table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '8px', marginBottom: '16px' }}>
+  <thead>
+    <tr>
+      <th style={{ textAlign: 'left', padding: '8px 12px', borderBottom: '2px solid var(--border)' }}>Token</th>
+      <th style={{ textAlign: 'left', padding: '8px 12px', borderBottom: '2px solid var(--border)' }}>Valore</th>
+      <th style={{ textAlign: 'left', padding: '8px 12px', borderBottom: '2px solid var(--border)' }}>Classi esempio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style={{ padding: '8px 12px', borderBottom: '1px solid var(--border)' }}>1–12</td>
+      <td style={{ padding: '8px 12px', borderBottom: '1px solid var(--border)' }}>0.25rem–3rem</td>
+      <td style={{ padding: '8px 12px', borderBottom: '1px solid var(--border)' }}><code>p-1</code> … <code>p-12</code>, <code>gap-4</code>, <code>px-6</code></td>
+    </tr>
+    <tr>
+      <td style={{ padding: '8px 12px', borderBottom: '1px solid var(--border)' }}>16, 20, 24</td>
+      <td style={{ padding: '8px 12px', borderBottom: '1px solid var(--border)' }}>4rem, 5rem, 6rem</td>
+      <td style={{ padding: '8px 12px', borderBottom: '1px solid var(--border)' }}><code>p-16</code>, <code>py-20</code>, <code>px-24</code></td>
+    </tr>
+  </tbody>
+</table>
+
+Non usare valori arbitrari (es. `p-[13px]`) né token custom non documentati.
+
+**Token semantici:**
+
+- **`py-section`** — Padding verticale tra sezioni (`--spacing-section`: 2rem → 3rem da `md` → 4rem da `lg`).
+- **`px-container-inline`** — Padding orizzontale container (`--spacing-container-inline`: 1rem → 1.5rem da `md` → 2rem da `lg`).
+- **Container** — `Layout/Container`: `max-w-container`, `px-container-inline`.

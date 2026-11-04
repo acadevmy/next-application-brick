@@ -1,30 +1,33 @@
 "use client";
 
-import { Toaster as Sonner } from "sonner";
+import { useSyncExternalStore } from "react";
+import { Toaster as SonnerToaster, type ToasterProps } from "sonner";
 
-import { ToasterProps } from "./SonnerProps";
+import {
+  getTheme,
+  type Theme,
+  THEME_ATTRIBUTE,
+} from "@/components/UI/Foundations/theme";
 
-const Toaster = ({ ...props }: ToasterProps) => {
-  return (
-    <Sonner
-      offset={{
-        right: 80,
-      }}
-      theme="light"
-      className="toaster group"
-      toastOptions={{
-        classNames: {
-          toast:
-            "list-none group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border-medium group-[.toaster]:shadow-lg rounded-lg",
-          actionButton:
-            "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
-          cancelButton:
-            "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
-        },
-      }}
-      {...props}
-    />
-  );
+/** Re-renders when anything (ThemeScript, ThemeToggle, the OS) flips the theme. */
+const subscribe = (onChange: () => void) => {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: [THEME_ATTRIBUTE],
+  });
+  return () => observer.disconnect();
+};
+
+const getServerTheme = (): Theme => "light";
+
+/**
+ * Sonner's Toaster on the design system's theme. Sonner defaults to `light`
+ * and knows nothing of `data-theme`, so toasts stayed light on a dark page.
+ */
+const Toaster = (props: Omit<ToasterProps, "theme">) => {
+  const theme = useSyncExternalStore(subscribe, getTheme, getServerTheme);
+  return <SonnerToaster theme={theme} {...props} />;
 };
 
 export default Toaster;

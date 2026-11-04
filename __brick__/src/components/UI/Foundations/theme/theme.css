@@ -1,0 +1,513 @@
+/**
+ * Design system theme: tokens, tones and typography utilities.
+ *
+ * This lives inside the design system, not in the application: the tokens are
+ * part of what the design system is. `src/app/globals.css` imports it.
+ *
+ * The colour roles follow shadcn's naming (`primary`, `muted`, `accent`,
+ * `destructive`, `card`, `popover`, `input`, `ring`, `chart-*`, `sidebar-*`),
+ * so a component added with `shadcn add` renders with this palette as is. The
+ * values are a neutral starting point: a project brands the design system by
+ * changing the semantic roles below, not the components.
+ */
+/* Dark mode keys off an attribute on <html>, not off the system preference
+ * alone: `data-theme` is written by the script in `theme.ts` before the first
+ * paint — from the stored choice, or from the system preference when there is
+ * none — which is what lets a button switch it. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  /* Breakpoints: Tailwind's defaults (sm 640, md 768, lg 1024, xl 1280,
+   * 2xl 1536). Redefine them here if a design needs a different scale. */
+
+  --font-sans: var(--font-geist-sans);
+  --font-heading: var(--font-geist-sans);
+  --font-body: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  /* Status surfaces (not in shadcn): soft backgrounds with a readable text
+   * colour, for alerts, badges and surface tones. */
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  /* Inverted surface (dark blocks), dark in both colour schemes. */
+  --color-inverted: var(--inverted);
+  --color-inverted-foreground: var(--inverted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Radius scale, derived from one value as in shadcn: change `--radius` in
+   * :root and every corner follows. */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  /* Component radii: what a card, a field or a dialog takes. */
+  --radius-card: var(--radius-xl);
+  --radius-info-card: var(--radius-lg);
+  --radius-input: var(--radius-md);
+  --radius-textarea: var(--radius-md);
+  --radius-dialog: var(--radius-xl);
+
+  /* Focus ring thickness, so the atoms stop repeating ring-[3px]. */
+  --ring-width: 3px;
+
+  --max-width-container: 80rem;
+  /* Overlay widths */
+  --width-menu-min: 12rem;
+  --width-select-min: 8rem;
+  --width-dialog-max: 32rem;
+  /* Reading measures for a column of text. */
+  --measure-narrow: 38rem;
+  --measure-default: 46rem;
+  --measure-wide: 60rem;
+
+  /* Font size + line height for the `text-*` utilities. Tailwind v4 wants
+   * them as two variables (`--text-x` and `--text-x--line-height`): a
+   * `size / line` shorthand compiles to an invalid `font-size` and is dropped. */
+  --text-title-1: var(--text-title-1-size);
+  --text-title-1--line-height: var(--text-title-1-line);
+  --text-title-2: var(--text-title-2-size);
+  --text-title-2--line-height: var(--text-title-2-line);
+  --text-title-3: var(--text-title-3-size);
+  --text-title-3--line-height: var(--text-title-3-line);
+  --text-heading-1: var(--text-heading-1-size);
+  --text-heading-1--line-height: var(--text-heading-1-line);
+  --text-heading-2: var(--text-heading-2-size);
+  --text-heading-2--line-height: var(--text-heading-2-line);
+  --text-heading-3: var(--text-heading-3-size);
+  --text-heading-3--line-height: var(--text-heading-3-line);
+  --text-heading-4: var(--text-heading-4-size);
+  --text-heading-4--line-height: var(--text-heading-4-line);
+  --text-heading-5: var(--text-heading-5-size);
+  --text-heading-5--line-height: var(--text-heading-5-line);
+  --text-heading-6: var(--text-heading-6-size);
+  --text-heading-6--line-height: var(--text-heading-6-line);
+  --text-body-1: var(--text-body-1-size);
+  --text-body-1--line-height: var(--text-body-1-line);
+  --text-body-2: var(--text-body-2-size);
+  --text-body-2--line-height: var(--text-body-2-line);
+  --text-body-3: var(--text-body-3-size);
+  --text-body-3--line-height: var(--text-body-3-line);
+  --text-body-4: var(--text-body-4-size);
+  --text-body-4--line-height: var(--text-body-4-line);
+  --text-caption-1: var(--text-caption-1-size);
+  --text-caption-1--line-height: var(--text-caption-1-line);
+}
+
+/* Responsive spacing: declared in a plain @theme (not @theme inline) so the
+ * :root overrides below actually take effect — `inline` would bake the value
+ * into every utility at build time. */
+@theme {
+  --spacing-container-inline: 1rem;
+  --spacing-section: 2rem;
+}
+
+@media (width >= theme(--breakpoint-md)) {
+  :root {
+    --spacing-container-inline: 1.5rem;
+    --spacing-section: 3rem;
+  }
+}
+
+@media (width >= theme(--breakpoint-lg)) {
+  :root {
+    --spacing-container-inline: 2rem;
+    --spacing-section: 4rem;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Colour tokens.
+ *
+ * Components and utilities read only the semantic roles below. Dark mode
+ * re-points the same roles: no component carries its own `dark:` colours.
+ * Values are shadcn's "neutral" base colour, plus the status and inverted
+ * roles this design system adds.
+ * ------------------------------------------------------------------------- */
+:root {
+  /* The active theme, not the preference: the UA paints scrollbars, form
+   * controls and the canvas like the theme the tokens below render. */
+  color-scheme: light;
+
+  --radius: 0.625rem;
+
+  /* Stacking order, one scale for the whole system: the sticky header, then
+   * the modal layer (its scrim dims the header), then floating content
+   * (select menus, tooltips) that must open above both, also inside a dialog. */
+  --z-header: 40;
+  --z-dialog: 300;
+  --z-popover: 400;
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  /* Darker than shadcn's 0.556: that one reads 4.3:1 on `--muted`, under AA. */
+  --muted-foreground: oklch(0.5 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  /* Tailwind red-700, not shadcn's red-600: text on the soft destructive
+   * surfaces (`bg-destructive/10`) must clear AA, which red-600 doesn't. */
+  --destructive: oklch(0.505 0.213 27.518);
+  --destructive-foreground: oklch(0.985 0 0);
+
+  --success: oklch(0.962 0.044 156.743);
+  --success-foreground: oklch(0.393 0.095 152.535);
+  --warning: oklch(0.973 0.071 103.193);
+  --warning-foreground: oklch(0.476 0.114 61.907);
+  --info: oklch(0.951 0.026 236.824);
+  --info-foreground: oklch(0.391 0.09 240.876);
+
+  --inverted: oklch(0.205 0 0);
+  --inverted-foreground: oklch(0.985 0 0);
+
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.145 0 0);
+
+  --success: oklch(0.266 0.065 152.934);
+  --success-foreground: oklch(0.925 0.084 155.995);
+  --warning: oklch(0.286 0.066 53.813);
+  --warning-foreground: oklch(0.945 0.129 101.54);
+  --info: oklch(0.293 0.066 243.157);
+  --info-foreground: oklch(0.901 0.058 230.902);
+
+  --inverted: oklch(0.269 0 0);
+  --inverted-foreground: oklch(0.985 0 0);
+
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* --- Surface tones -----------------------------------------------------------
+ * A tone re-points the semantic roles for its subtree. Children keep using
+ * `bg-background`, `text-foreground` and the Button's own variants: they adapt
+ * because the variables underneath them changed, not because someone threaded
+ * a prop down. `--primary` is re-pointed where the default CTA would otherwise
+ * disappear into the surface. */
+@layer components {
+  [data-surface-tone="neutral"] {
+    --background: var(--card);
+    --foreground: var(--card-foreground);
+  }
+  [data-surface-tone="muted"] {
+    --background: var(--muted);
+  }
+  [data-surface-tone="info"] {
+    --background: var(--info);
+    --foreground: var(--info-foreground);
+    --muted-foreground: var(--info-foreground);
+  }
+  [data-surface-tone="accent"] {
+    --background: var(--accent);
+    --foreground: var(--accent-foreground);
+  }
+  [data-surface-tone="success"] {
+    --background: var(--success);
+    --foreground: var(--success-foreground);
+    --muted-foreground: var(--success-foreground);
+  }
+  [data-surface-tone="warning"] {
+    --background: var(--warning);
+    --foreground: var(--warning-foreground);
+    --muted-foreground: var(--warning-foreground);
+  }
+  [data-surface-tone="critical"] {
+    --background: var(--destructive);
+    --foreground: var(--destructive-foreground);
+    --muted-foreground: var(--destructive-foreground);
+    --primary: var(--destructive-foreground);
+    --primary-foreground: var(--destructive);
+  }
+  [data-surface-tone="inverted"] {
+    --background: var(--inverted);
+    --foreground: var(--inverted-foreground);
+    --muted-foreground: oklch(0.708 0 0);
+    --border: oklch(1 0 0 / 15%);
+    --primary: var(--inverted-foreground);
+    --primary-foreground: var(--inverted);
+  }
+}
+
+/* Typography scale: Title, Heading, Body, Caption */
+/* Fluid display scale.
+ * Each level interpolates between a mobile minimum and its previous fixed
+ * size (now the maximum) across the 375px-1280px viewport range, so
+ * components no longer hand-write `md:heading-4` style jumps.
+ * Line height is the unitless ratio the fixed scale already used, which
+ * keeps the proportions identical at every size.
+ * Body and caption stay fixed: fluid body text hurts readability. */
+:root {
+  --text-title-1-size: clamp(2.5rem, 1.2569rem + 5.3039vw, 5.5rem);
+  --text-title-1-line: 1.0682;
+  --text-title-2-size: clamp(2.25rem, 1.3177rem + 3.9779vw, 4.5rem);
+  --text-title-2-line: 1.1111;
+  --text-title-3-size: clamp(2rem, 1.1713rem + 3.5359vw, 4rem);
+  --text-title-3-line: 1.125;
+  --text-heading-1-size: clamp(2rem, 1.3785rem + 2.6519vw, 3.5rem);
+  --text-heading-1-line: 1.2143;
+  --text-heading-2-size: clamp(1.75rem, 1.2320rem + 2.2099vw, 3rem);
+  --text-heading-2-line: 1.2083;
+  --text-heading-3-size: clamp(1.625rem, 1.2624rem + 1.5470vw, 2.5rem);
+  --text-heading-3-line: 1.2;
+  --text-heading-4-size: clamp(1.5rem, 1.2928rem + 0.8840vw, 2rem);
+  --text-heading-4-line: 1.1875;
+  --text-heading-5-size: clamp(1.25rem, 1.1464rem + 0.4420vw, 1.5rem);
+  --text-heading-5-line: 1.25;
+  --text-heading-6-size: clamp(1.125rem, 1.0732rem + 0.2210vw, 1.25rem);
+  --text-heading-6-line: 1.2;
+}
+
+/* Body and caption: fixed sizes. */
+:root {
+  --text-body-1-size: 1.125rem;
+  --text-body-1-line: 1.5rem;
+  --text-body-2-size: 1rem;
+  --text-body-2-line: 1.375rem;
+  --text-body-3-size: 0.875rem;
+  --text-body-3-line: 1.25rem;
+  --text-body-4-size: 0.75rem;
+  --text-body-4-line: 1rem;
+  --text-caption-1-size: 0.625rem;
+  --text-caption-1-line: 0.875rem;
+}
+
+/* Title: hero / impact headings */
+@utility title-1 {
+  font-family: var(--font-heading);
+  font-size: var(--text-title-1-size);
+  line-height: var(--text-title-1-line);
+  letter-spacing: 0;
+}
+@utility title-2 {
+  font-family: var(--font-heading);
+  font-size: var(--text-title-2-size);
+  line-height: var(--text-title-2-line);
+  letter-spacing: 0;
+}
+@utility title-3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-title-3-size);
+  line-height: var(--text-title-3-line);
+  letter-spacing: 0;
+}
+/* Heading: section titles */
+@utility heading-1 {
+  font-family: var(--font-heading);
+  font-size: var(--text-heading-1-size);
+  line-height: var(--text-heading-1-line);
+  letter-spacing: 0;
+}
+@utility heading-2 {
+  font-family: var(--font-heading);
+  font-size: var(--text-heading-2-size);
+  line-height: var(--text-heading-2-line);
+  letter-spacing: 0;
+}
+@utility heading-3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-heading-3-size);
+  line-height: var(--text-heading-3-line);
+  letter-spacing: 0;
+}
+@utility heading-4 {
+  font-family: var(--font-heading);
+  font-size: var(--text-heading-4-size);
+  line-height: var(--text-heading-4-line);
+  letter-spacing: 0;
+}
+@utility heading-5 {
+  font-family: var(--font-heading);
+  font-size: var(--text-heading-5-size);
+  line-height: var(--text-heading-5-line);
+  letter-spacing: 0;
+}
+@utility heading-6 {
+  font-family: var(--font-heading);
+  font-size: var(--text-heading-6-size);
+  line-height: var(--text-heading-6-line);
+  letter-spacing: 0;
+}
+/* Body */
+@utility body-1 {
+  font-family: var(--font-body);
+  font-size: var(--text-body-1-size);
+  line-height: var(--text-body-1-line);
+  letter-spacing: 0;
+}
+@utility body-2 {
+  font-family: var(--font-body);
+  font-size: var(--text-body-2-size);
+  line-height: var(--text-body-2-line);
+  letter-spacing: 0;
+}
+@utility body-3 {
+  font-family: var(--font-body);
+  font-size: var(--text-body-3-size);
+  line-height: var(--text-body-3-line);
+  letter-spacing: 0;
+}
+@utility body-4 {
+  font-family: var(--font-body);
+  font-size: var(--text-body-4-size);
+  line-height: var(--text-body-4-line);
+  letter-spacing: 0;
+}
+/* Caption */
+@utility caption-1 {
+  font-family: var(--font-body);
+  font-size: var(--text-caption-1-size);
+  line-height: var(--text-caption-1-line);
+  letter-spacing: 0;
+}
+
+@layer components {
+  /*
+   * Prose: HTML content (from CMS or rich text) uses the same typography as the
+   * design system. Apply to any container that renders HTML (e.g. class="prose").
+   */
+  .prose h1 {
+    font-family: var(--font-heading);
+    font-size: var(--text-heading-1-size);
+    line-height: var(--text-heading-1-line);
+    letter-spacing: 0;
+    font-weight: 500;
+  }
+  .prose h2 {
+    font-family: var(--font-heading);
+    font-size: var(--text-heading-2-size);
+    line-height: var(--text-heading-2-line);
+    letter-spacing: 0;
+    font-weight: 500;
+  }
+  .prose h3 {
+    font-family: var(--font-heading);
+    font-size: var(--text-heading-3-size);
+    line-height: var(--text-heading-3-line);
+    letter-spacing: 0;
+    font-weight: 500;
+  }
+  .prose h4 {
+    font-family: var(--font-heading);
+    font-size: var(--text-heading-4-size);
+    line-height: var(--text-heading-4-line);
+    letter-spacing: 0;
+    font-weight: 500;
+  }
+  .prose h5 {
+    font-family: var(--font-heading);
+    font-size: var(--text-heading-5-size);
+    line-height: var(--text-heading-5-line);
+    letter-spacing: 0;
+    font-weight: 500;
+  }
+  .prose h6 {
+    font-family: var(--font-heading);
+    font-size: var(--text-heading-6-size);
+    line-height: var(--text-heading-6-line);
+    letter-spacing: 0;
+    font-weight: 500;
+  }
+  .prose p {
+    font-family: var(--font-body);
+    font-size: var(--text-body-1-size);
+    line-height: var(--text-body-1-line);
+    letter-spacing: 0;
+  }
+}

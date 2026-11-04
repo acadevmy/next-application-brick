@@ -1,0 +1,85 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Design System/Introduction" />
+
+# Design System
+
+Token, componenti e pattern di layout del frontend, su Tailwind CSS v4.
+
+---
+
+## Come è organizzato
+
+- **Foundations** — colori, tipografia, spacing e radius (vedi **Foundations / Theme**).
+- **Atoms** — `Button`, `Badge`, `Alert`, `Input`, `Textarea`, `Select`,
+  `Checkbox`, `RadioGroup`, `Form`, `Label`, `Typography`, `Icon`, `Avatar`,
+  `NavItem`, `Dialog`, `Tooltip`, `Accordion`, `ToggleGroup`, `Carousel`, `ExpandableText`, `Separator`, `Skeleton`,
+  `Spinner`, `Sonner`.
+- **Molecules** — `Header`, `Footer`, `PageHeader`, `SectionHeading`,
+  `SearchInput`, `SegmentedControl`, `FormFields`, `ThemeToggle`.
+- **Layout** — `PageLayout`, `Container`, `Section`, `Surface`, `Stack`,
+  `Inline`, `Grid`, `Prose`, `ButtonGroup`, `FormRow`.
+- **Sections** — `PageHeaderSection`, `ContentSection`. Una sezione è una
+  disposizione intera di banda: è quello che una pagina (o un blocco del CMS)
+  sceglie invece di comporre.
+- **Patterns** — composizioni che *non* sono componenti: la card, la info card,
+  la pagina d'errore.
+
+Il set è volutamente piccolo: è la base da cui parte ogni progetto. I componenti
+che servono a un progetto specifico (gallerie, slider editoriali, liste filtrabili…) si
+aggiungono nel progetto, seguendo
+`docs/design-system-contributing.md`.
+Gli atomi sono quelli di shadcn adattati: un componente nuovo si parte da
+`pnpm dlx shadcn add <nome>` e si sposta nel layer giusto.
+
+---
+
+## Le quattro regole
+
+**1. Il colore si eredita, non si passa.** `Surface` ri-punta i ruoli semantici
+per il proprio sottoalbero; i figli usano `bg-background` e `text-foreground` e
+seguono il tono da soli — `Button` incluso, perché i toni che ne hanno bisogno
+ri-puntano anche `--primary`.
+
+```tsx
+<Surface tone="accent">
+  <Typography variant="heading-4">…</Typography>   {/* nessuna prop tone */}
+  <Button>CTA</Button>                              {/* nessuna prop variant */}
+</Surface>
+```
+
+**2. Un componente guadagna il posto** se incapsula comportamento (stato,
+accessibilità, interazione) o una decisione di token che non deve derivare.
+Layout e stile puri sono una ricetta: stanno in **Patterns**, non qui.
+
+**3. Composizione, non configurazione.** Le props descrivono la struttura, il
+contenuto entra come slot. Una vista senza ricerca non passa un flag: semplicemente
+non scrive lo slot (`PageHeader.Toolbar` assente = nessuna toolbar).
+
+**4. Niente valori arbitrari.** Spacing dalla scala o dai token semantici
+(`py-section`, `px-container-inline`); colori solo dalle utility del tema; icone
+sempre via `<Icon icon={Icons.…} />`, un solo set (lucide).
+
+Due regole ESLint le tengono: `design-system/no-visual-overrides` blocca gli
+override dal punto di consumo — inclusa la `className` dentro oggetti-prop — e
+`design-system-domain/no-domain-vocabulary` tiene il vocabolario di prodotto
+fuori da questo layer.
+
+---
+
+## I token
+
+Vivono in `src/components/UI/Foundations/theme/theme.css`, **dentro** il design
+system; `src/app/globals.css` si limita a importarlo. I componenti leggono solo
+i **ruoli semantici**, con i nomi di shadcn (`background`, `foreground`,
+`primary`, `secondary`, `muted`, `accent`, `destructive`, `card`, `popover`,
+`border`, `input`, `ring`, `chart-*`, `sidebar-*`) più tre stati (`success`,
+`warning`, `info`) e la superficie `inverted`. Ci sono poi i token di
+componente (`--radius-card`, `--radius-input`, `--radius-dialog`).
+
+I valori di partenza sono neutri (la palette "neutral" di shadcn, font Geist):
+per dare l'identità a un progetto si cambiano i ruoli in `:root` e
+`[data-theme="dark"]`, `--radius` e i font in `src/fonts`, non i componenti.
+
+I breakpoint sono quelli di Tailwind (`sm` 640, `md` 768, `lg` 1024, `xl` 1280,
+`2xl` 1536). Se il design ne definisce altri, si ridefiniscono in `@theme`.

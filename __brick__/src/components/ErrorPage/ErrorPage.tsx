@@ -1,26 +1,33 @@
 "use client";
 
+import * as Sentry from "@sentry/nextjs";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 
 import Button from "@/components/UI/Atoms/Button";
-import ErrorSection from "@/components/UI/Molecules/ErrorSection";
 
+import { ErrorPageLayout } from "./ErrorPageLayout";
 import { ErrorPageProps } from "./ErrorPageProps";
 
-const ErrorPage = ({ error }: ErrorPageProps) => {
+const ErrorPage = ({ error, retry }: ErrorPageProps) => {
   const t = useTranslations();
 
   useEffect(() => {
-    // Log the error to an error reporting service
-    console.error(error.message);
+    // An error with a `digest` was thrown on the server: `onRequestError`
+    // (src/instrumentation.ts) already reported it with the full stack, and
+    // the client only sees a redacted copy. Report the client-side ones here.
+    if (!error.digest) Sentry.captureException(error);
   }, [error]);
 
   return (
-    <ErrorSection
+    <ErrorPageLayout
       pretitle={t("genericError")}
       title={t("genericErrorTitle")}
-      Buttons={<Button variant="primary">{t("contactUs")}</Button>}
+      actions={
+        <Button variant="default" onClick={() => retry()}>
+          {t("genericErrorButton")}
+        </Button>
+      }
     />
   );
 };

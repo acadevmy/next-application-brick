@@ -1,30 +1,22 @@
-import { useLocale as i18UseLocale } from "next-intl";
-import { createNavigation } from "next-intl/navigation";
 import { defineRouting } from "next-intl/routing";
-import { getLocale as i18nGetLocale } from "next-intl/server";
 
-import { defaultLocale, Locale, locales } from "./i18nConfig";
-import useI18nRouter from "./useI18nRouter";
+/**
+ * Routing definition only, as in the next-intl starter; the navigation APIs
+ * live in `navigation.ts`. It is also the single list of supported locales:
+ * `global.ts` derives the `Locale` type from it, and `hasLocale` from
+ * next-intl validates against it.
+ *
+ * Every public URL carries its locale (`/it/contact`, `/en/contact`), with one
+ * locale or many: each language has its own indexable address, and the
+ * middleware redirects an unprefixed URL to the visitor's locale (cookie, then
+ * `Accept-Language`).
+ *
+ * `src/proxy.ts` imports this file: anything reaching `next-intl/server` here
+ * would pull `request.ts` (and with it `next/root-params`, App Directory only)
+ * into the middleware bundle.
+ */
 export const routing = defineRouting({
-  // A list of all locales that are supported
-  locales,
-
-  // Used when no locale matches
-  defaultLocale,
+  locales: ["it", "en"],
+  defaultLocale: "it",
+  localePrefix: "always",
 });
-
-// Lightweight wrappers around Next.js' navigation APIs
-// that will consider the routing configuration
-export const {
-  Link,
-  redirect,
-  usePathname,
-  useRouter: useNextIntlRouter,
-  getPathname,
-} = createNavigation(routing);
-
-export { useI18nRouter as useRouter };
-
-// Regular components
-export const useLocale = () => i18UseLocale() as Locale;
-export const getLocale = () => i18nGetLocale() as Promise<Locale>;

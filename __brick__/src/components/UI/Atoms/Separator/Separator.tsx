@@ -1,18 +1,39 @@
 "use client";
 
-import * as SeparatorPrimitive from "@radix-ui/react-separator";
+import { cva, type VariantProps } from "class-variance-authority";
+import { Separator as SeparatorPrimitive } from "radix-ui";
 import * as React from "react";
 
-import { SeparatorProps } from "@/components/UI/Atoms/Separator";
-import styles from "@/components/UI/Atoms/Separator/Separator.module.scss";
-import { cn } from "@/utils/style";
+import { cn } from "@/components/UI/Foundations/style";
 
+const separatorVariants = cva("shrink-0", {
+  variants: {
+    variant: {
+      default: "bg-border",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+});
+
+/**
+ * Separator: a horizontal or vertical rule in the border colour.
+ * Use decorative when the line is purely visual (e.g. between title and filter row).
+ */
 const Separator = React.forwardRef<
-  React.ElementRef<typeof SeparatorPrimitive.Root>,
-  SeparatorProps
+  React.ComponentRef<typeof SeparatorPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root> &
+    VariantProps<typeof separatorVariants>
 >(
   (
-    { className, orientation = "horizontal", decorative = true, ...props },
+    {
+      className,
+      orientation = "horizontal",
+      decorative = true,
+      variant,
+      ...props
+    },
     ref,
   ) => (
     <SeparatorPrimitive.Root
@@ -20,15 +41,14 @@ const Separator = React.forwardRef<
       decorative={decorative}
       orientation={orientation}
       className={cn(
-        styles.separator,
-        orientation === "horizontal" ? styles.separatorH : styles.separatorV,
+        separatorVariants({ variant }),
+        orientation === "horizontal" ? "h-px w-full" : "h-full w-px",
         className,
       )}
       {...props}
     />
   ),
 );
-
 Separator.displayName = SeparatorPrimitive.Root.displayName;
 
-export default Separator;
+export { Separator };

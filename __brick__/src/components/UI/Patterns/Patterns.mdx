@@ -1,0 +1,69 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Design System/Patterns" />
+
+# Patterns
+
+Some things look like components but are not: they have no state, no
+accessibility contract and no token decision of their own. They are
+**compositions** of primitives, and writing them down here is what stops three
+slightly different versions from appearing across the codebase.
+
+The rule that decides which is which:
+
+> A component enters the design system if it encapsulates **behaviour** (state,
+> accessibility, interaction) or a **token decision that must not drift**.
+> Layout and style alone are a recipe.
+
+## Card
+
+There is no `Card` component. A card is `Surface` + `Stack` + `Typography`.
+
+Compose it once in the app layer (e.g. `components/AppCard`) and render every
+card through that. If you need a card somewhere new, call that component — do
+not re-compose it.
+
+```tsx
+<Surface tone="neutral" radius="card" padding="md" elevation="raised">
+  <Stack gap="md">
+    <Typography variant="heading-5" weight="semibold" as="h3">
+      {title}
+    </Typography>
+    <Typography variant="body-2" tone="muted">
+      {content}
+    </Typography>
+    <Button width="responsive">{cta}</Button>
+  </Stack>
+</Surface>
+```
+
+## Info card
+
+An icon beside one or more label/value pairs (an address, opening hours, a
+contact).
+
+```tsx
+<Surface tone="success" radius="info-card" padding="sm">
+  <Inline gap="md" align="start" wrap={false}>
+    <Icon icon={Icons.Location} size="xl" />
+    <Stack gap="sm">
+      <Typography variant="body-2" weight="bold">{label}</Typography>
+      <Typography variant="body-2" weight="medium">{value}</Typography>
+    </Stack>
+  </Inline>
+</Surface>
+```
+
+## Error page
+
+`ErrorPageLayout`, next to the two pages that use it. A centred surface with a
+pretitle, a title and one recovery action.
+
+## What stays a component
+
+`Dialog`, `Tooltip`, `Accordion`, `ToggleGroup`, `Carousel`, `ExpandableText`, `Select`, `Checkbox`, `RadioGroup`, `Form`, the field
+wrappers, `Header` (its mobile menu) and `ThemeToggle`: all of them own state, focus
+management or an accessibility contract.
+
+`Typography`, `Badge`, `Button`, `Icon`, `Separator`, `Alert`: each is a token
+decision that must not drift.
