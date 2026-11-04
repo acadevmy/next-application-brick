@@ -13,7 +13,7 @@
 - Rimossi gli esempi precedenti: pagine `react-query` e `static-data`,
   `DialogWithParams`, `ExampleReactRouter`, `sitemap-index.xml`, SCSS e
   Tailwind v3.
-- Vincolo Mason aggiornato a `>=0.1.0 <0.2.0`.
+- Vincolo Mason allargato a `>=0.1.0-dev.57 <0.2.0`: resta compatibile con la devmy CLI (mason 0.1.0-dev.57) e accetta mason_cli 0.1.x.
 - Corretto l'escape delle graffe letterali (`{{=<% %>=}}` al posto di `{{{ }}}`,
   che Mason svuotava).
 

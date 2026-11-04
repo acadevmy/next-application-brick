@@ -4,7 +4,7 @@ repository: https://github.com/acadevmy/next-application-brick
 version: 0.2.0
 
 environment:
-  mason: ">=0.1.0 <0.2.0"
+  mason: ">=0.1.0-dev.57 <0.2.0"
 
 vars:
   applicationName:
