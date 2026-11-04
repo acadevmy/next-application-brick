@@ -15,7 +15,7 @@ struttura e regole.
 ```bash
 mason add nextjs_application_brick \
   --git-url https://github.com/acadevmy/next-application-brick
-mason make nextjs_application_brick -o apps/frontend
+mason make nextjs_application_brick -o applications/frontend
 ```
 
 | Variabile | Default | Dove finisce |
@@ -23,8 +23,14 @@ mason make nextjs_application_brick -o apps/frontend
 | `applicationName` | `frontend` | nome del pacchetto (`param-case`) e prefisso delle variabili d'ambiente (`CONSTANT_CASE`: `FRONTEND_*`, `NEXT_PUBLIC_FRONTEND_*`) |
 | `port` | `4000` | `dev`, `dev:https`, `start` e `<APP>_DOMAIN` d'esempio in `.env.example` |
 
+Come lo scaffold devmy, il `package.json` dell'app forza Node.js con
+`devEngines.runtime` (`onFail: "download"`): pnpm scarica quella versione e la
+usa per ogni script. Va tenuta allineata a quella dello scaffold; `engines`
+indica solo il range supportato.
+
 `next.config.ts` legge il `.env` da `../..`: genera l'app due livelli sotto la
-root del monorepo (es. `apps/<nome>`), dove vivono `.env` e lockfile.
+root del monorepo (nello scaffold devmy, `applications/<nome>`), dove vivono
+`.env` e lockfile.
 
 ## Configurazione del workspace ospite
 

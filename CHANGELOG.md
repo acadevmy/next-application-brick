@@ -13,6 +13,8 @@
 - Rimossi gli esempi precedenti: pagine `react-query` e `static-data`,
   `DialogWithParams`, `ExampleReactRouter`, `sitemap-index.xml`, SCSS e
   Tailwind v3.
+- Node.js forzato a 24.22.2 con `devEngines.runtime` (`onFail: download`),
+  allineato allo scaffold devmy.
 - Hook `post_gen`: aggiunge al `pnpm-workspace.yaml` del workspace ospite le
   `peerDependencyRules.allowedVersions` che servono all'app
   (`tsconfck>typescript: '6'`).
