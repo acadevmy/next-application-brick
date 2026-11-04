@@ -28,15 +28,17 @@ root del monorepo (es. `apps/<nome>`), dove vivono `.env` e lockfile.
 
 ## Configurazione del workspace ospite
 
-Il brick non porta un `pnpm-workspace.yaml`: queste impostazioni non viaggiano
-con il `package.json` dell'app e vanno aggiunte al `pnpm-workspace.yaml` di
-root del monorepo, se non ci sono già.
+Il brick non porta un `pnpm-workspace.yaml`: le impostazioni pnpm vivono in
+quello di root del monorepo.
+
+L'hook `post_gen` aggiunge a quel file le regole sui peer che servono all'app
+(`peerDependencyRules.allowedVersions`, `tsconfck>typescript: '6'`), se non ci
+sono già.
+
+Le dipendenze con script di installazione vanno autorizzate nel workspace (lo
+scaffold devmy le include già):
 
 ```yaml
-peerDependencyRules:
-  allowedVersions:
-    tsconfck>typescript: '6'
-
 allowBuilds:
   '@parcel/watcher': true
   '@sentry/cli': true
