@@ -37,10 +37,6 @@ root del monorepo (nello scaffold devmy, `applications/<nome>`), dove vivono
 Il brick non porta un `pnpm-workspace.yaml`: le impostazioni pnpm vivono in
 quello di root del monorepo.
 
-L'hook `post_gen` aggiunge a quel file le regole sui peer che servono all'app
-(`peerDependencyRules.allowedVersions`, `tsconfck>typescript: '6'`), se non ci
-sono già.
-
 Le dipendenze con script di installazione vanno autorizzate nel workspace (lo
 scaffold devmy le include già):
 
@@ -52,6 +48,11 @@ allowBuilds:
   esbuild: true
   unrs-resolver: true
 ```
+
+L'install segnala un peer non soddisfatto: `tsconfck`, dipendenza indiretta di
+Storybook (`@storybook/nextjs-vite` → `vite-tsconfig-paths`), dichiara
+`typescript ^5` mentre l'app usa TypeScript 6. È solo un warning: lint, test e
+build funzionano.
 
 Il browser per i test delle storie (Vitest + Playwright) si installa con
 `pnpm exec playwright install chromium`.
